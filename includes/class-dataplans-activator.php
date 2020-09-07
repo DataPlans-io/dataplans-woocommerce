@@ -22,6 +22,12 @@
  */
 class Dataplans_Activator {
 
+	public static $default = array(
+		'environment'          => 0,
+		'api_access_token'     => '',
+		'auto_complete_orders' => 0,
+	);
+
 	/**
 	 * Short Description. (use period)
 	 *
@@ -30,7 +36,7 @@ class Dataplans_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		add_option( DataplansConst::OPTIONS_NAME, self::$default );
 	}
 
 }

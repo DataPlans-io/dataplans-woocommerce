@@ -1,0 +1,5 @@
+{
+    "require": {
+        "dataplans/dataplans-php": "^1.0"
+    }
+}

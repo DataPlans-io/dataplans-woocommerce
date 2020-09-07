@@ -157,6 +157,12 @@ class Dataplans {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu', 11 );
+        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+//        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_sections' );
+//        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_fields' );
+//        $this->loader->add_action( 'admin_notices', $plugin_admin, 'display_admin_notices' );
+//        $this->loader->add_action( 'admin_init', $plugin_admin, 'admin_notices_init' );
 	}
 
 	/**
@@ -215,4 +221,11 @@ class Dataplans {
 		return $this->version;
 	}
 
+}
+
+final class DataplansConst
+{
+	const NAME = 'DataPlans.io';
+	const I18N_NAME = 'dataplans';
+	const OPTIONS_NAME = 'dpio_options';
 }

@@ -30,7 +30,7 @@ class Dataplans_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+//		delete_option( DataplansConst::OPTIONS_NAME );
 	}
 
 }

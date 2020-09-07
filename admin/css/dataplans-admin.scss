@@ -1,0 +1,219 @@
+$space: 4;
+@mixin spacing() {
+  @for $i from 0 through 5 {
+    $gap: 0;
+    @if ($i == 0) {
+      $gap: 0;
+    } @else if ($i == 1) {
+      $gap: #{$space * 0.25}rem;
+    } @else if ($i == 2) {
+      $gap: #{$space * 0.5}rem;
+    } @else if ($i == 3) {
+      $gap: #{$space}rem;
+    } @else if ($i == 4) {
+      $gap: #{$space * 1.5}rem;
+    } @else if ($i == 5) {
+      $gap: #{$space * 3}rem;
+    }
+    //.m-#{$i} {
+    //  margin: #{$gap};
+    //}
+    //.mt-#{$i} {
+    //  margin-top: #{$gap};
+    //}
+    //.mb-#{$i} {
+    //  margin-bottom: #{$gap};
+    //}
+    .mr-#{$i} {
+      margin-right: #{$gap};
+    }
+    //.ml-#{$i} {
+    //  margin-left: #{$gap};
+    //}
+  }
+}
+
+$dpio_color: #424CA1;
+$dpio_color_danger: #dc3545;
+$dpio_color_success: #28a745;
+$dpio_color_warning: #ffc107;
+$dpio_color_info: #17a2b8;
+$dpio_color_primary: #007bff;
+$dpio_color_dark: #343a40;
+$dpio_color_gray: #6c757d;
+$dpio_color_light: #f8f9fa;
+
+.dpio-header {
+  align-items: center;
+  display: flex;
+  margin: 30px 20px 20px 0;
+
+  .dpio-logo {
+    background-image: url("../img/dataplans.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: contain;
+    height: 50px;
+    max-width: 312px;
+    width: 100%;
+  }
+
+  .dpio-account {
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    padding-left: 20px;
+  }
+
+  .dpio-info {
+    border-left: 1px solid rgba($dpio_color_gray, 0.3);
+    flex-grow: 1;
+    margin-left: 30px;
+    margin-top: 10px;
+    padding: 10px 0 10px 20px;
+    text-align: right;
+    text-transform: uppercase;
+
+    h4 {
+      font-size: 14px;
+      font-weight: lighter;
+      margin: 0 0 5px;
+
+      + strong {
+        font-size: 22px;
+        font-weight: bold;
+      }
+    }
+
+    &:first-child {
+      border-left: none;
+    }
+  }
+
+  .dpio-mode {
+    strong {
+      color: $dpio_color_warning;
+    }
+
+    &.live {
+      color: $dpio_color_primary;
+    }
+  }
+
+  .dpio-status {
+    strong {
+      color: $dpio_color_gray;
+    }
+
+    &.online {
+      strong {
+        color: $dpio_color_success;
+      }
+    }
+
+    &.offline {
+      strong {
+        color: $dpio_color_danger;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1100px) {
+    flex-direction: column;
+
+    .dpio-account {
+      flex-grow: 1;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    .dpio-info {
+      margin-left: 0;
+      padding-right: 20px;
+    }
+
+    .dpio-logo {
+      margin-bottom: 10px;
+    }
+
+    .dpio-info {
+      text-align: center;
+    }
+  }
+
+  @media only screen and (max-width: 555px) {
+    .dpio-account {
+      flex-direction: column;
+    }
+
+    .dpio-info {
+      border-left: none;
+    }
+  }
+}
+
+.dataplans {
+  h1 {
+    border-bottom: 1px solid rgba($dpio_color_gray, 0.2);
+    font-weight: bold;
+    padding-bottom: 20px;
+  }
+
+  .dpio-content {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(#000, 0.1);
+    padding: 20px 30px 10px;
+  }
+
+  @include spacing;
+}
+
+.dpio-form {
+  input {
+    box-shadow: 0 0 2px 2px rgba(#000, 0.1);
+  }
+
+  input[type=radio] {
+    background: #fff;
+    height: 22px;
+    width: 22px;
+    color: #555;
+    cursor: pointer;
+
+    &:checked:before {
+      background-color: #000;
+      height: 10px;
+      width: 10px;
+      margin: 5px;
+      content: "";
+      text-indent: -9999px;
+      border-radius: 50px;
+      line-height: 16px;
+      font-size: 24px;
+      display: block;
+    }
+  }
+
+  input[type=text] {
+    min-width: 100%;
+  }
+
+  .submit {
+    text-align: right;
+
+    input[type=submit] {
+      font-size: 20px;
+      font-weight: bold;
+      padding: 5px 30px;
+    }
+  }
+
+  .form-table th {
+    padding-bottom: 15px;
+  }
+
+  .form-table td {
+    padding-top: 20px;
+  }
+}
