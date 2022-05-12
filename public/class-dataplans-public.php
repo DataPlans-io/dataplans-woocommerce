@@ -100,4 +100,62 @@ class Dataplans_Public {
 
 	}
 
+
+	function save_inorder_api_prod_purchase_dataCBF($order_id){		
+		//update_option("mam_test_payment_complete",print_r("payment_complete_save_inorder_apiprod_purchase_idCBF",true));
+		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
+
+		if(strlen($flag_selected_api_product_plan) > 2)
+			return;
+
+        $order = wc_get_order( $order_id );
+        $items = $order->get_items();
+
+        foreach ( $items as $product )
+           $pid = $product['product_id'];
+
+		$settings_arr = get_option("dpio_options");
+		$selected_api_pplan = get_metadata('post',$pid,'selected_api_product_plan',true);
+		if(isset($settings_arr['api_access_token']) && trim($selected_api_pplan) != '' && trim($settings_arr['api_access_token']) != ''){
+			if($settings_arr['environment'] == 1)
+				$url = "https://app.dataplans.io/api/v1/purchases";
+			else
+				$url = "https://sandbox.dataplans.io/api/v1/purchases";
+				
+			$curl = curl_init($url);
+			curl_setopt($curl, CURLOPT_URL, $url);
+
+			$headers = [
+				'accept: application/json',				
+				'Authorization: '.$settings_arr['api_access_token']
+			];
+			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+						
+			$postRequest = array(
+				'slug' => $selected_api_pplan,
+			);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
+
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			$result = curl_exec($curl);
+			$result = json_decode($result);
+			//update_option("mam_test_api_resutl",print_r($result,true));
+			curl_close($curl);
+			if(isset($result->purchase)){
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_id',$result->purchase->purchaseId);
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_qrcode',$result->purchase->esim->qrCodeDataUrl);
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_array',$result);
+				update_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',"flag_selected_api_product_plan_purchase_array_inserted");
+				update_option("current_balance_api_product_purchases",$result->availableBalance);
+			}
+
+
+			
+		} // if(isset($settings_arr['api_access_token'])
+	}// function
+
+
 }
