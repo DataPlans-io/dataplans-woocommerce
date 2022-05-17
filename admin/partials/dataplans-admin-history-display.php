@@ -63,7 +63,7 @@
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->phone ?></td>
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->serial ?></td>
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->availableBalance?></td>
-                            <td style="text-align:center"><a title="Resend Order Email" href="?page=dpio-history&dataplan_action=resend_email&oid=<?php echo $order_id ?>"><span class="dashicons dashicons-email"></span></a>  <a title="View QR Code" target="_blank" href="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl ?>"><span class="dashicons dashicons-media-code"></span></a></td>
+                            <td style="text-align:center"><a title="Resend Order Email" href="?page=dpio-history&dataplan_action=resend_email&oid=<?php echo $order_id ?>"><span class="dashicons dashicons-email"></span></a>  <a title="View QR Code" target="_blank" href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?>&choe=UTF-8"><span class="dashicons dashicons-media-code"></span></a></td>
                         </tr>
         <?php 
                     } // if(product_plan_purchase_arr->purchase)

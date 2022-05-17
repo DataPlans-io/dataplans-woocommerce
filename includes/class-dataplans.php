@@ -188,6 +188,7 @@ class Dataplans {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'save_inorder_api_prod_purchase_dataCBF' );
+		//$this->loader->add_filter( 'wp_mail_content_type', $plugin_public, 'dataplan_wp_mail_content_typeCBF');
 
 	}
 

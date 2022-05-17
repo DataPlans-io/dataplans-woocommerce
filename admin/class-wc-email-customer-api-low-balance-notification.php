@@ -1,15 +1,9 @@
 <?php
-/**
- * Class WC_Email_Customer_Completed_Order file.
- *
- * @package WooCommerce\Emails
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
+if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) ) :
 
 	/**
 	 * Customer Completed Order Email.
@@ -21,25 +15,25 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 	 * @package     WooCommerce\Classes\Emails
 	 * @extends     WC_Email
 	 */
-	class WC_Email_Customer_Completed_Order_Api extends WC_Email {
+	class WC_Email_Customer_Low_Balance_Notification_Api extends WC_Email {
 
 		/**
 		 * Constructor.
 		 */
 		public function __construct() {
-			$this->id             = 'customer_completed_order_api';
+			$this->id             = 'low_balance_notification_api';
 			$this->customer_email = true;
-			$this->title          = __( 'Resend Order', 'woocommerce' );
-			$this->description    = __( 'Order complete emails are sent to customers when their orders are marked completed and usually indicate that their orders have been shipped.', 'woocommerce' );
-			$this->template_html  = 'emails/customer-completed-order.php';
-			$this->template_plain = 'emails/plain/customer-completed-order.php';
+			$this->title          = __( 'Low Balance Alert', 'woocommerce' );
+			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'woocommerce' );
+			//$this->template_html  = 'emails/customer-completed-order.php';
+			//$this->template_plain = 'emails/plain/customer-completed-order.php';
 			$this->placeholders   = array(
 				'{order_date}'   => '',
 				'{order_number}' => '',
 			);
 
 			// Triggers for this email.
-			add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
+			//add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
 			// Call parent constructor.
 			parent::__construct();
@@ -97,12 +91,12 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 		 *
 		 * @return string
 		 */
+		
 		public function get_content_html() {
-			return wc_get_template_html(
-				$this->template_html,
+			return wc_get_template_html('../../'.PLUGIN_DIR_NAME.'\admin\template-customer-api-low-balance-notification.php',
 				array(
 					'order'              => $this->object,
-					'email_heading'      => $this->get_heading(),
+					'email_heading'      => "Low Balance Alert!",
 					'additional_content' => $this->get_additional_content(),
 					'sent_to_admin'      => false,
 					'plain_text'         => false,
@@ -143,4 +137,4 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 
 endif;
 
-return new WC_Email_Customer_Completed_Order_Api();
+return new WC_Email_Customer_Low_Balance_Notification_Api();

@@ -45,6 +45,8 @@ define( 'DATAPLANS_VERSION', '1.0.0' );
 define('dataplans_PATH', dirname(__FILE__));
 define('dataplans_URL', plugin_dir_url(__FILE__));
 
+define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
+
 
 
 /**
@@ -94,17 +96,15 @@ run_dataplans();
 
 
 
-	//add_action("init","testing_dataplanCBF");
+	//add_action("admin_notices","testing_dataplanCBF");
 	function testing_dataplanCBF(){
 		
-		
-		exit;
 		//return;
 		//var_dump("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-		$url = "https://sandbox.dataplans.io/api/v1/purchases/1489a11e-26ed-4ea8-afc2-720d2fa13f9f";
-		//$url = "https://app.dataplans.io/api/v1/plans";
-		$curl = curl_init($url);
-		curl_setopt($curl, CURLOPT_URL, $url);
+		// $url = "https://sandbox.dataplans.io/api/v1/purchases/1489a11e-26ed-4ea8-afc2-720d2fa13f9f";
+		// //$url = "https://app.dataplans.io/api/v1/plans";
+		// $curl = curl_init($url);
+		// curl_setopt($curl, CURLOPT_URL, $url);
 
 		
 
@@ -118,19 +118,19 @@ $postRequest = array(
     'slug' => 'dtac-tourist-sim',
 );
 
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		//curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
+		// curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		// //curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
 
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		$result = curl_exec($curl);
-		$result = json_decode($result);
-		curl_close($curl);
+		// curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		// $result = curl_exec($curl);
+		// $result = json_decode($result);
+		// curl_close($curl);
 
 
 		if(isset($_GET['mam'])){?>
-			<div id="message" class="updated notice is-dismissible"><p><?php print_r('<pre>').print_r($result).print_r('</pre>') ?></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>
+			<div id="message" class="updated notice is-dismissible"><p><?php var_dump(PLUGIN_DIR_NAME); var_dump(dataplans_URL); var_dump(dataplans_PATH); //print_r('<pre>').print_r($result).print_r('</pre>') ?></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>
 			
 					<?php
 		}

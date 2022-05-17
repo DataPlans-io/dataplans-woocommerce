@@ -43,12 +43,18 @@ class Dataplans_Admin {
 				'description' => 'Display QR Code in Email when new order created',
 				'renderer'    => 'render_displaying_inemail_qrcode_checkbox',
 			),
-		'auto_complete_orders' =>
+		'balancelimit_alert' =>
 			array(
-				'label'       => 'Auto-complete orders',
-				'description' => 'Get orders automatically completed upon payment. This option only works with IPN payments (eg. PayPal).',
-				'renderer'    => 'render_orders_checkbox',
-			)
+				'label'       => 'Balance Alert Limit',
+				'description' => 'How much balance remains, to send email notification to customer',
+				'renderer'    => 'render_balancelimit_alert_CBF',
+			),
+		// 'auto_complete_orders' =>
+		// 	array(
+		// 		'label'       => 'Auto-complete orders',
+		// 		'description' => 'Get orders automatically completed upon payment. This option only works with IPN payments (eg. PayPal).',
+		// 		'renderer'    => 'render_orders_checkbox',
+		// 	)
 	);
 
 	/**
@@ -260,7 +266,7 @@ class Dataplans_Admin {
 					</tr>
 					<tr>
 						<th>QR Code</th>
-						<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"></td>
+						<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString?>"></td>
 					</tr>
 				</table>
 
@@ -277,9 +283,11 @@ class Dataplans_Admin {
 		$settings_arr = get_option("dpio_options");
 		$order_data = $order->get_data();
 		$order_id = $order_data['id'];
+		$dplan_curbalance = get_option("current_balance_api_product_purchases");
+
 
 		//var_dump($get_status);
-		//$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl
+		//$product_plan_purchase_arr->purchase->esim->qrCodeString
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);?>
 		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){?>
 			<h3>eSim Code</h3>
@@ -290,16 +298,18 @@ class Dataplans_Admin {
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
 				</tr>
 			</table>
 			<?php
 		}
 
+		
 	}
 
 
 	function sendemail_customer_completed_order_apiCBF($emails){
+		$emails['WC_Email_Customer_Low_Balance_Notification_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-api-low-balance-notification.php';
 		$emails['WC_Email_Customer_Completed_Order_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-completed-order.php';
 		return $emails;
 	}
@@ -310,8 +320,11 @@ class Dataplans_Admin {
 		if(isset($_GET['dataplan_action']) && isset($_GET['oid'])){
 			WC()->mailer()->emails['WC_Email_Customer_Completed_Order_Api']->trigger( $_GET['oid'], wc_get_order($_GET['oid']) );
 			
+			
+			//wp_mail("customer1@wp1.com","MAM Subj","MAM MAS Messageeeeeeeeeeee");
+
 			wp_safe_redirect(admin_url("admin.php?page=dpio-history"));
-			return;
+			exit;
 		}
 	}
 	
@@ -552,6 +565,19 @@ class Dataplans_Admin {
 			$args['name'],
 			$args['name'],
 			( isset( $args['options'][ $args['name'] ] ) && $args['options'][ $args['name'] ] ) == 1 ? "checked" : "",
+			$this->admin_options[ $args['name'] ]['description']
+		);
+	}
+
+
+	function render_balancelimit_alert_CBF( $args = array() ) {
+		$settings_arr = get_option("dpio_options");
+		//echo '<pre>';print_r($settings_arr);echo '</pre>';
+		printf(
+			'<input type="text" id="%s" name="dpio_options[%s]" value="%s" pattern="[^\s]+" /><p class="description cst-desc">%s</p>',
+			$args['name'],
+			$args['name'],
+			$args['options'][ $args['name'] ],
 			$this->admin_options[ $args['name'] ]['description']
 		);
 	}
