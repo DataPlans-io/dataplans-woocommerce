@@ -298,7 +298,7 @@ class Dataplans_Admin {
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
 				</tr>
 			</table>
 			<?php

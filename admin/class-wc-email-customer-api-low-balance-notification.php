@@ -22,7 +22,7 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 		 */
 		public function __construct() {
 			$this->id             = 'low_balance_notification_api';
-			$this->customer_email = true;
+			//$this->customer_email = true;
 			$this->title          = __( 'Low Balance Alert', 'woocommerce' );
 			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'woocommerce' );
 			//$this->template_html  = 'emails/customer-completed-order.php';
@@ -37,6 +37,10 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 
 			// Call parent constructor.
 			parent::__construct();
+
+			// if none was entered, just use the WP admin email as a fallback
+			if ( ! $this->recipient )
+            $this->recipient = get_option( 'admin_email' );
 		}
 
 		/**
