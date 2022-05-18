@@ -28,7 +28,7 @@
         <table id="api_dataplans_orders_list" style="width:100%">
             <thead>
                 <tr>
-                    <th>Purchase</th>
+                    
                     <th>Date</th>
                     <th>WC OID</th>
                     <th>Status</th>
@@ -54,7 +54,6 @@
                        // $order_get_items = $order->get_items();
                 ?>
                         <tr>
-                            <td style="text-align:center"><a target="_blank" href="https://esims.dataplans.io/dashboard/purchases/<?php echo $product_plan_purchase_arr->purchase->purchaseId ?>">View Purchase</a></td>
                             <td style="text-align:center"><?php echo date('Y-m-d h:i a',strtotime($product_plan_purchase_arr->purchase->purchasedAt))?></td>
                             <td style="text-align:center"><?php echo $order_id ?></td>
                             <td style="text-align:center"><?php echo ucfirst($get_status) ?></td>
@@ -63,7 +62,7 @@
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->phone ?></td>
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->serial ?></td>
                             <td style="text-align:center"><?php echo $product_plan_purchase_arr->availableBalance?></td>
-                            <td style="text-align:center"><a title="Resend Order Email" href="?page=dpio-history&dataplan_action=resend_email&oid=<?php echo $order_id ?>"><span class="dashicons dashicons-email"></span></a>  <a title="View QR Code" target="_blank" href="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl ?>><span class="dashicons dashicons-media-code"></span></a></td>
+                            <td style="text-align:center"><a title="Resend Order Email" href="?page=dpio-history&dataplan_action=resend_email&oid=<?php echo $order_id ?>"><span class="dashicons dashicons-email"></span></a>  <a title="View QR Code" target="_blank" href="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl ?>><span class="dashicons dashicons-media-code"></span></a> <a title="View Purchase" target="_blank" href="https://esims.dataplans.io/dashboard/purchases/<?php echo $product_plan_purchase_arr->purchase->purchaseId ?>"><span class="dashicons dashicons-welcome-view-site"></span></a></td>
                         </tr>
         <?php 
                     } // if(product_plan_purchase_arr->purchase)
@@ -74,7 +73,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Purchase</th>
+
                     <th>WC OID</th>
                     <th>Date</th>
                     <th>Status</th>
