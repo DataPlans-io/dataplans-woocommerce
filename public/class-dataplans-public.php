@@ -139,7 +139,7 @@ class Dataplans_Public {
 						
 			$postRequest = array(
 				'slug' => $selected_api_pplan,
-				'includeQRDataURL' => true
+				'includeQRDataURL' => "true"
 			);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
 
