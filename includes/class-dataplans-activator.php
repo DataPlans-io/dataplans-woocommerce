@@ -37,7 +37,7 @@ class Dataplans_Activator {
 	 */
 	public static function activate() {
 		add_option( DataplansConst::OPTIONS_NAME, self::$default );
-		$this->update_balance();
+		Dataplans_Activator::update_balance();
 	}
 
 	public static function update_balance(){	
