@@ -199,6 +199,10 @@ class Dataplans {
 	 */
 	public function run() {
 		$this->loader->run();
+		
+		$settings_arr = get_option("dpio_options");
+		if(!empty($settings_arr['api_access_token']) && !get_option('current_balance_api_product_purchases')) 
+		Dataplans_Activator::update_balance();
 	}
 
 	/**
