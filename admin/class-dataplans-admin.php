@@ -279,17 +279,12 @@ class Dataplans_Admin {
 	}
 
 
-	function also_send_inemail_qrcode_forselected_apiproduct_planCBF($order){
-		$settings_arr = get_option("dpio_options");
-		$order_data = $order->get_data();
-		$order_id = $order_data['id'];
-		$dplan_curbalance = get_option("current_balance_api_product_purchases");
+	function woocommerce_before_order_itemmeta( ){
 
+		$order_id =  $_REQUEST['post'];
 
-		//var_dump($get_status);
-		//$product_plan_purchase_arr->purchase->esim->qrCodeString
-		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);?>
-		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){?>
+		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
+		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
 			<h3>eSim Code</h3>
 			<table height="100%" width="100%">
 				<tr>
@@ -303,8 +298,6 @@ class Dataplans_Admin {
 			</table>
 			<?php
 		}
-
-		
 	}
 
 

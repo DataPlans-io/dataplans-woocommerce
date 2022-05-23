@@ -35,16 +35,18 @@ if ( ! defined( 'WPINC' ) ) {
  */
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
+register_activation_hook( __FILE__, 'activate_dataplans' );
+register_deactivation_hook( __FILE__, 'deactivate_dataplans' );
+
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'DATAPLANS_VERSION', '1.0.0' );
-
 define('dataplans_PATH', dirname(__FILE__));
 define('dataplans_URL', plugin_dir_url(__FILE__));
-
 define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
 
 
@@ -54,7 +56,7 @@ define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
  * This action is documented in includes/class-dataplans-activator.php
  */
 function activate_dataplans() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dataplans-activator.php';
+	require_once dataplans_PATH . '/includes/class-dataplans-activator.php';
 	Dataplans_Activator::activate();
 }
 
@@ -63,18 +65,17 @@ function activate_dataplans() {
  * This action is documented in includes/class-dataplans-deactivator.php
  */
 function deactivate_dataplans() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dataplans-deactivator.php';
+	require_once dataplans_PATH . '/includes/class-dataplans-deactivator.php';
 	Dataplans_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_dataplans' );
-register_deactivation_hook( __FILE__, 'deactivate_dataplans' );
+
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-dataplans.php';
+require dataplans_PATH . '/includes/class-dataplans.php';
 
 /**
  * Begins execution of the plugin.

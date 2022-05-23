@@ -155,10 +155,10 @@ class Dataplans {
 		$plugin_admin = new Dataplans_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'init_addmetabox_select_api_product_planCBF' );
-		$this->loader->add_action( 'save_post', $plugin_admin, 'save_select_api_product_planCBF' );
-		$this->loader->add_action( 'woocommerce_email_after_order_table', $plugin_admin, 'also_send_inemail_qrcode_forselected_apiproduct_planCBF' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_select_api_product_planCBF' );		
 		$this->loader->add_filter('woocommerce_email_classes', $plugin_admin, 'sendemail_customer_completed_order_apiCBF' );
 		$this->loader->add_action('init',$plugin_admin,'run_WC_Email_Customer_Completed_Order_Api_CBF');
+		$this->loader->add_action( 'woocommerce_before_order_itemmeta', $plugin_admin,'woocommerce_before_order_itemmeta');
 
 
 
@@ -187,7 +187,9 @@ class Dataplans {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'save_inorder_api_prod_purchase_dataCBF' );
+		$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'woocommerce_order_status_completed' );
+		$this->loader->add_action( 'woocommerce_email_after_order_table', $plugin_admin, 'woocommerce_email_after_order_table' );
+		$this->loader->add_action( 'woocommerce_view_order', $plugin_public, 'woocommerce_view_order'  );
 		//$this->loader->add_filter( 'wp_mail_content_type', $plugin_public, 'dataplan_wp_mail_content_typeCBF');
 
 	}
