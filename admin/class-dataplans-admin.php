@@ -307,6 +307,31 @@ class Dataplans_Admin {
 		return $emails;
 	}
 
+	function wc_email_after_order_table($order){
+		$settings_arr = get_option("dpio_options");
+		$order_data = $order->get_data();
+		$order_id = $order_data['id'];
+		$dplan_curbalance = get_option("current_balance_api_product_purchases");
+		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
+		?>
+		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){?>
+			<h3>eSim Code</h3>
+			<table height="100%" width="100%">
+				<tr>
+					<td><strong>Product</strong></td>
+					<td><strong>ESIM CODE</strong></td>
+				</tr>
+				<tr>
+					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
+					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+				</tr>
+			</table>
+			<?php
+		}
+
+		
+	}
+
 
 
 	function run_WC_Email_Customer_Completed_Order_Api_CBF(){

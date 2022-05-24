@@ -122,7 +122,7 @@ class Dataplans_Public {
 	<?php
 		} // if isset
 	}
-	function woocommerce_order_status_completed($order_id){
+	function wc_order_status_completed($order_id){
 		$settings_arr = get_option("dpio_options");
 		$dplan_curbalance = get_option("current_balance_api_product_purchases");
 		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
@@ -184,33 +184,7 @@ class Dataplans_Public {
 		} // if(isset($settings_arr['api_access_token'])
 	}// function
 
-	function woocommerce_email_after_order_table($order){
-		$settings_arr = get_option("dpio_options");
-		$order_data = $order->get_data();
-		$order_id = $order_data['id'];
-		$dplan_curbalance = get_option("current_balance_api_product_purchases");
-
-
-		//var_dump($get_status);
-		//$product_plan_purchase_arr->purchase->esim->qrCodeString
-		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);?>
-		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){?>
-			<h3>eSim Code</h3>
-			<table height="100%" width="100%">
-				<tr>
-					<td><strong>Product</strong></td>
-					<td><strong>ESIM CODE</strong></td>
-				</tr>
-				<tr>
-					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
-				</tr>
-			</table>
-			<?php
-		}
-
-		
-	}
+	
 
 
 }
