@@ -594,7 +594,7 @@ class Dataplans_Admin {
 	 */
 	public function render_options_text( $args = array() ) {
 		printf(
-			'<input type="text" id="%s" name="dpio_options[%s]" value="%s" pattern="[^\s]+" title="White spaces are not allowed, please double check the values." /><p class="description cst-desc">%s</p>',
+			'<input type="password" id="%s" name="dpio_options[%s]" value="%s" pattern="[^\s]+" title="White spaces are not allowed, please double check the values." /><p class="description cst-desc">%s</p>',
 			$args['name'],
 			$args['name'],
 			$args['options'][ $args['name'] ],
