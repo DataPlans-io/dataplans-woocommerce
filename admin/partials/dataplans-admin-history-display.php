@@ -73,7 +73,6 @@
             </tbody>
             <tfoot>
                 <tr>
-
                     <th>WC OID</th>
                     <th>Date</th>
                     <th>Status</th>
@@ -89,7 +88,9 @@
 
     <script>
         jQuery(document).ready(function() {
-            jQuery('#api_dataplans_orders_list').DataTable();
+            jQuery('#api_dataplans_orders_list').DataTable({
+        order: [[1, 'desc']]
+    });
             setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 100);
             setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 500);
             setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 1000);

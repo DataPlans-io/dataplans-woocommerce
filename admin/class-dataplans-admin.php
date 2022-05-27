@@ -323,7 +323,7 @@ class Dataplans_Admin {
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><?php echo (trim($product_plan_purchase_arr->purchase->esim->phone) != '' ? '<span class="dashicons dashicons-phone"></span>'.$product_plan_purchase_arr->purchase->esim->phone : '')?></td>
 				</tr>
 			</table>
 			<?php
@@ -344,6 +344,30 @@ class Dataplans_Admin {
 			wp_safe_redirect(admin_url("admin.php?page=dpio-history"));
 			exit;
 		}
+	}
+	
+
+
+
+
+	function removecustom_wc_email_settings_resend_lowbal_CBF(){
+		?>
+		<script>
+			jQuery(document).ready(function(){
+				jQuery('.wc-email-settings-table-name').find('a').each(function(index, value) {
+					var resendemail_indexoff = (jQuery(value).attr('href').indexOf('wc_email_customer_completed_order_api'));
+					var lowbalemail_indexoff = (jQuery(value).attr('href').indexOf('wc_email_customer_low_balance_notification_api'));
+
+					if(resendemail_indexoff > 0)
+						jQuery(value).parent().parent().remove();
+
+					if(lowbalemail_indexoff > 0)
+						jQuery(value).parent().parent().remove();
+						
+				});
+			});
+  		</script>
+	<?php
 	}
 	
 
@@ -485,14 +509,14 @@ class Dataplans_Admin {
         $status =  null;
         $balance = null;
 
-		// Get balance API
+		// Get balance API ​
         try {
-			$url = "https://app.dataplans.io/api/v1/plans";
+			$url = "https://".DATAPLANS_API_MODE.".dataplans.io/api/v1/accountBalance";
 			$curl = curl_init($url);
 			
 			$headers = [
 				'accept: application/json',				
-				'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiJmMzkxN2ZmNC0xMTc0LTQyODYtYTE1NC05OTNhOWRiNThmNmYiLCJpYXQiOjE2NTA3NjQ0MTUsImV4cCI6MjUxNDY3ODAxNX0.RPlI2Xtzxm8inpEBHopX3vQGOx45aTCMcMGNLFcNhao'
+				'Authorization: '.DATAPLANS_TOKEN
 			];
 		
 			
@@ -505,11 +529,15 @@ class Dataplans_Admin {
 					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			$result = curl_exec($curl);
 			$result = json_decode($result);
-			if(isset($result[0]))
+			//echo '<pre>';print_r($result);echo '</pre>';
+			if(isset($result->availableBalance)){
 	       		$status = 'online';
+				$balance = $result->availableBalance;
+			}
 			else
 				$status = 'offline';
-				$balance = get_option("current_balance_api_product_purchases","N/A");
+				
+			
         } catch (Exception $error) {
 	        $status = 'offline';
         } finally {

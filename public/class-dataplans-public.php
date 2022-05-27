@@ -124,7 +124,29 @@ class Dataplans_Public {
 	}
 	function wc_order_status_completed($order_id){
 		$settings_arr = get_option("dpio_options");
-		$dplan_curbalance = get_option("current_balance_api_product_purchases");
+
+		if($settings_arr['environment'] == 1)
+			$url = "https://app.dataplans.io/api/v1/accountBalance";
+		else
+			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
+		
+		 $curl = curl_init($url);
+		 curl_setopt($curl, CURLOPT_URL, $url);
+		 $headers = [
+				'accept: application/json',				
+				'Authorization: '.$settings_arr['api_access_token']
+			];
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$result = curl_exec($curl);
+		$result = json_decode($result);
+
+		if(isset($result->availableBalance))
+			$dplan_curbalance = $result->availableBalance;
+		else
+			$dplan_curbalance = 0;
 		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
 		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert']){
 			WC()->mailer()->emails['WC_Email_Customer_Low_Balance_Notification_Api']->trigger( $order_id, wc_get_order($order_id) );

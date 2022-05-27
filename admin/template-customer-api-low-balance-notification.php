@@ -25,8 +25,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 
 <?php /* translators: %s: Customer first name */ 
-$settings_arr = get_option("dpio_options");
-$dplan_curbalance = get_option("current_balance_api_product_purchases");
+		$settings_arr = get_option("dpio_options");
+
+		if($settings_arr['environment'] == 1)
+			$url = "https://app.dataplans.io/api/v1/accountBalance";
+		else
+			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
+		
+		 $curl = curl_init($url);
+		 curl_setopt($curl, CURLOPT_URL, $url);
+		 $headers = [
+				'accept: application/json',				
+				'Authorization: '.$settings_arr['api_access_token']
+			];
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$result = curl_exec($curl);
+		$result = json_decode($result);
+
+		if(isset($result->availableBalance))
+			$dplan_curbalance = $result->availableBalance;
+		else
+			$dplan_curbalance = 'N/A';
+		
 
 ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>

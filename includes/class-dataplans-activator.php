@@ -45,9 +45,9 @@ class Dataplans_Activator {
 		
 		$settings_arr = get_option("dpio_options");
 		if($settings_arr['environment'] == 1)
-				$url = "https://app.dataplans.io/api/v1/accountBalance";
-			else
-				$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
+			$url = "https://app.dataplans.io/api/v1/accountBalance";
+		else
+			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
 		
 		 $curl = curl_init($url);
 		 curl_setopt($curl, CURLOPT_URL, $url);
