@@ -152,3 +152,6 @@
 .dpio-form .form-table td {
   padding-top: 20px;
 }
+.dpio-form input[type=password] {
+    min-width: 100%;
+}
