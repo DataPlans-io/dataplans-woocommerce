@@ -208,7 +208,33 @@ class Dataplans {
 		
 		$settings_arr = get_option("dpio_options");
 		if(!empty($settings_arr['api_access_token']) && !get_option('current_balance_api_product_purchases')) 
-		Dataplans_Activator::update_balance();
+		Dataplans::update_balance();
+	}
+
+	public static function update_balance(){	
+		/* Update Balance */
+		
+		$settings_arr = get_option("dpio_options");
+		if($settings_arr['environment'] == 1)
+			$url = "https://app.dataplans.io/api/v1/accountBalance";
+		else
+			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
+		
+		 $curl = curl_init($url);
+		 curl_setopt($curl, CURLOPT_URL, $url);
+		 $headers = [
+				'accept: application/json',				
+				'Authorization: '.$settings_arr['api_access_token']
+			];
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		$result = curl_exec($curl);
+		$result = json_decode($result);
+		if(isset($result->availableBalance)){
+			update_option('current_balance_api_product_purchases',$result->availableBalance);
+		}
 	}
 
 	/**

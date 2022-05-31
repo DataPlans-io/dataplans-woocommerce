@@ -50,6 +50,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 		else
 			$dplan_curbalance = 'N/A';
 		
+			curl_close($curl);
 
 ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>

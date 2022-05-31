@@ -147,15 +147,21 @@ class Dataplans_Public {
 			$dplan_curbalance = $result->availableBalance;
 		else
 			$dplan_curbalance = 0;
+
+
+
+
+		curl_close($curl);
+		
+
 		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
-		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert']){
+		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert'])
 			WC()->mailer()->emails['WC_Email_Customer_Low_Balance_Notification_Api']->trigger( $order_id, wc_get_order($order_id) );
-			return;
-		}
+		
 
-		if(strlen($flag_selected_api_product_plan) > 2)
+		if(strlen($flag_selected_api_product_plan) > 5)
 			return;
-
+	
         $order = wc_get_order( $order_id );
         $items = $order->get_items();
 
@@ -165,6 +171,8 @@ class Dataplans_Public {
 		$settings_arr = get_option("dpio_options");
 		$selected_api_pplan = get_metadata('post',$pid,'selected_api_product_plan',true);
 		if(isset($settings_arr['api_access_token']) && trim($selected_api_pplan) != '' && trim($settings_arr['api_access_token']) != ''){
+					
+			
 			if($settings_arr['environment'] == 1)
 				$url = "https://app.dataplans.io/api/v1/purchases";
 			else
@@ -191,8 +199,6 @@ class Dataplans_Public {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			$result = curl_exec($curl);
 			$result = json_decode($result);
-			//update_option("mam_test_api_resutl",print_r($result,true));
-			curl_close($curl);
 			if(isset($result->purchase)){
 				update_metadata('post',$order_id,'selected_api_product_plan_purchase_id',$result->purchase->purchaseId);
 				update_metadata('post',$order_id,'selected_api_product_plan_purchase_qrcode',$result->purchase->esim->qrCodeString);
@@ -200,7 +206,7 @@ class Dataplans_Public {
 				update_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',"flag_selected_api_product_plan_purchase_array_inserted");
 				update_option("current_balance_api_product_purchases",$result->availableBalance);
 			}
-
+			curl_close($curl);
 
 			
 		} // if(isset($settings_arr['api_access_token'])

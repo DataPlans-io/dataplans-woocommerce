@@ -170,7 +170,6 @@ class Dataplans_Admin {
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			$result = curl_exec($curl);
 			$result = json_decode($result);
-			curl_close($curl);
 			//echo '<pre>'.print_r($cur_postObj).'</pre>';
 			$selected_api_product_plan_obj = '';
 			if(isset($result[0])){
@@ -180,7 +179,7 @@ class Dataplans_Admin {
 				} // foreach ($result as $api_prod_obj)
 				echo '</select> ';
 
-				echo ' <input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" />';
+				echo '<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>';
 				
 				foreach ($result as $api_prod_obj){
 					if($selected_api_pplan == $api_prod_obj->slug){
@@ -193,12 +192,15 @@ class Dataplans_Admin {
 
 
 				if($selected_api_product_plan_obj == ''){
-					$selected_api_product_plan_obj = ($result[0]);
+					$selected_api_product_plan_obj = base64_encode(serialize($result[0]));
 					echo ' <input type="hidden" name="selected_api_info" value="'.$selected_api_product_plan_obj.'" />';
 				}
 
 
 			} // if(isset($result[0]))
+
+			curl_close($curl);
+
 
 		} // if(isset($settings_arr['api_access_token']) 
 
@@ -437,14 +439,14 @@ class Dataplans_Admin {
 			array( $this, 'display_history_page' )
 		);
 
-		add_submenu_page(
-			'dataplans',
-			__( 'DataPlans.io Emails Template', DataplansConst::I18N_NAME ),
-			__( 'Emails Template', DataplansConst::I18N_NAME ),
-			'activate_plugins',
-			'dpio-email',
-			array( $this, 'display_email_page' )
-		);
+		// add_submenu_page(
+		// 	'dataplans',
+		// 	__( 'DataPlans.io Emails Template', DataplansConst::I18N_NAME ),
+		// 	__( 'Emails Template', DataplansConst::I18N_NAME ),
+		// 	'activate_plugins',
+		// 	'dpio-email',
+		// 	array( $this, 'display_email_page' )
+		// );
 	}
 
 	/**
