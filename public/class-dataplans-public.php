@@ -170,7 +170,7 @@ class Dataplans_Public {
 
 		$settings_arr = get_option("dpio_options");
 		$selected_api_pplan = get_metadata('post',$pid,'selected_api_product_plan',true);
-		if(isset($settings_arr['api_access_token']) && trim($selected_api_pplan) != '' && trim($settings_arr['api_access_token']) != ''){
+		if(isset($settings_arr['api_access_token']) && trim($selected_api_pplan) != '' && $selected_api_pplan != 'no_selected_api_product_plan' && trim($settings_arr['api_access_token']) != ''){
 					
 			
 			if($settings_arr['environment'] == 1)

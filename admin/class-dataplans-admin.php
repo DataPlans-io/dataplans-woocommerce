@@ -173,7 +173,9 @@ class Dataplans_Admin {
 			//echo '<pre>'.print_r($cur_postObj).'</pre>';
 			$selected_api_product_plan_obj = '';
 			if(isset($result[0])){
-				echo '<select name="selected_api_product_plan">';
+				echo '<select name="selected_api_product_plan">
+						<option value="no_selected_api_product_plan">None</option>';
+				
 				foreach ($result as $api_prod_obj) {?>
 					<option value="<?php echo $api_prod_obj->slug?>" <?php echo ($selected_api_pplan == $api_prod_obj->slug ? 'selected' : '')?>><?php echo ($api_prod_obj->name.' - '.$api_prod_obj->retailPrice.' '.$api_prod_obj->priceCurrency)?></option><?php
 				} // foreach ($result as $api_prod_obj)
@@ -191,10 +193,10 @@ class Dataplans_Admin {
 				}
 
 
-				if($selected_api_product_plan_obj == ''){
-					$selected_api_product_plan_obj = base64_encode(serialize($result[0]));
-					echo ' <input type="hidden" name="selected_api_info" value="'.$selected_api_product_plan_obj.'" />';
-				}
+				// if($selected_api_product_plan_obj == ''){
+				// 	$selected_api_product_plan_obj = base64_encode(serialize($result[0]));
+				// 	echo ' <input type="hidden" name="selected_api_info" value="'.$selected_api_product_plan_obj.'" />';
+				// }
 
 
 			} // if(isset($result[0]))
@@ -295,7 +297,7 @@ class Dataplans_Admin {
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?>&choe=UTF-8"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
 				</tr>
 			</table>
 			<?php
@@ -325,7 +327,7 @@ class Dataplans_Admin {
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?>&choe=UTF-8"><br /><?php echo (trim($product_plan_purchase_arr->purchase->esim->phone) != '' ? '<span class="dashicons dashicons-phone"></span>'.$product_plan_purchase_arr->purchase->esim->phone : '')?></td>
+					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><?php echo (trim($product_plan_purchase_arr->purchase->esim->phone) != '' ? '<span class="dashicons dashicons-phone"></span>'.$product_plan_purchase_arr->purchase->esim->phone : '')?></td>
 				</tr>
 			</table>
 			<?php
