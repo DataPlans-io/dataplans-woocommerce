@@ -269,8 +269,8 @@ class Dataplans_Admin {
 						<td><?php echo $product_plan_purchase_arr->purchase->esim->serial?><</td>
 					</tr>
 					<tr>
-						<th>QR Code</th>
-						<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString?>"></td>
+						<th>LPA Value</th>
+						<td><?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?></td>
 					</tr>
 				</table>
 
