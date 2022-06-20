@@ -58,7 +58,7 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 
 			if ( is_a( $order, 'WC_Order' ) ) {
 				$this->object                         = $order;
-				$this->recipient                      = $this->object->get_billing_email();
+				$this->recipient                      = get_option( 'admin_email' );
 				$this->placeholders['{order_date}']   = wc_format_datetime( $this->object->get_date_created() );
 				$this->placeholders['{order_number}'] = $this->object->get_order_number();
 			}
