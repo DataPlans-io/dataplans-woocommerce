@@ -53,7 +53,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 			curl_close($curl);
 
 ?>
-<p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
+<p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( get_option("blogname") ) ); ?></p>
 <p><?php esc_html_e( 'No more purchases take place due to low Balance. The Balance Must be greater than '.$settings_arr['balancelimit_alert'], 'woocommerce' ); ?></p>
 <h3><?php esc_html_e( 'The Current Balance is: '.$dplan_curbalance, 'woocommerce' ); ?></h3>
 
