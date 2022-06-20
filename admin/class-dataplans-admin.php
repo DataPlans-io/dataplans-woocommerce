@@ -46,7 +46,7 @@ class Dataplans_Admin {
 		'balancelimit_alert' =>
 			array(
 				'label'       => 'Balance Alert Limit',
-				'description' => 'How much balance remains, to send email notification to customer',
+				'description' => 'Low balance notification. Email will send to admin when balance is below this amount',
 				'renderer'    => 'render_balancelimit_alert_CBF',
 			),
 		// 'auto_complete_orders' =>
