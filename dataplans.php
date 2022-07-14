@@ -16,7 +16,7 @@
  * Plugin Name:       DataPlans.io
  * Plugin URI:        https://dataplans.io/
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            DataPlans.io
  * Author URI:        https://dataplans.io/
  * License:           GPL-2.0+
@@ -44,7 +44,7 @@ register_deactivation_hook( __FILE__, 'deactivate_dataplans' );
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'DATAPLANS_VERSION', '1.0.0' );
+define( 'DATAPLANS_VERSION', '1.0.1' );
 define('dataplans_PATH', dirname(__FILE__));
 define('dataplans_URL', plugin_dir_url(__FILE__));
 define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
