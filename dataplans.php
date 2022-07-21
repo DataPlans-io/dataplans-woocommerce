@@ -13,11 +13,11 @@
  * @package           Dataplans
  *
  * @wordpress-plugin
- * Plugin Name:       DataPlans.io
- * Plugin URI:        https://dataplans.io/
+ * Plugin Name:       DataPlans eSIMs for WooCommerce
+ * Plugin URI:        https://esims.gitbook.io/dataplans/plugins
  * Description:       Sell eSIMs for digital delivery with WooCommerce and DataPlans.io
  * Version:           1.0.1
- * Author:            DataPlans.io
+ * Author:            DataPlans
  * Author URI:        https://dataplans.io/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
