@@ -1,1 +1,0 @@
-# DataPlans.io WooCommerce Plugin
