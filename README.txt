@@ -1,7 +1,7 @@
-=== DataPlans.io WooCommerce Plugin ===
+=== DataPlans eSIMs for WooCommerce ===
 Contributors: dataplans, alisaleem252, thebusted
-Donate link: https://github.com/DataPlans-io/dataplans-woocommerce
-Tags: woocommerce, esim, SIM, Sim Cards, travel,
+Plugin URL: https://github.com/DataPlans-io/dataplans-woocommerce
+Tags: woocommerce, esim, SIM, travel, data, woo, virtual, digital, qrcode, qr,
 Requires at least: 4.7
 Tested up to: 6.0.1
 Stable tag: 4.7
@@ -20,11 +20,24 @@ With this plugin you can add and resell all the Dataplans.io eSIM inventory.  Ma
 
 Some Plugin details:
 
-* Connect to your Dataplans account via your API key
+* Connect to your DataPlans account via your API key
 * Start with the sandbox environment to text your payment gateways
 * Switch to live environment for live purchases
 * Use the Autocomplete WooCommerce Orders plugin to make instant deliveries
 
+== Installation ==
+
+= From your WordPress dashboard =
+
+1. Visit 'Plugins > Add New'
+2. Search for 'DataPlans'
+3. Activate DataPlans eSIMs for WooCommerce from your Plugins page.
+
+= From WordPress.org =
+
+1. Download DataPlans eSIMs for WooCommerce.
+2. Upload to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
+3. Activate DataPlans from your Plugins page.
 
 == Frequently Asked Questions ==
 

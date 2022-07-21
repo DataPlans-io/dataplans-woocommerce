@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       DataPlans.io
  * Plugin URI:        https://dataplans.io/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Sell eSIMs for digital delivery with WooCommerce and DataPlans.io
  * Version:           1.0.1
  * Author:            DataPlans.io
  * Author URI:        https://dataplans.io/
