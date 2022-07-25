@@ -270,8 +270,8 @@ class DPWC_Dataplans_Admin {
 			<h3>eSim Code</h3>
 			<table height="100%" width="100%">
 				<tr>
-					<td><strong>Product</strong></td>
-					<td><strong>ESIM CODE</strong></td>
+					<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
+					<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 				</tr>
 				<tr>
 					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
@@ -296,16 +296,17 @@ class DPWC_Dataplans_Admin {
 		$dplan_curbalance = get_option("current_balance_api_product_purchases");
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		?>
-		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){?>
-			<h3>eSim Code</h3>
+		<?php if(isset($settings_arr['display_qrcode_in_email']) && $product_plan_purchase_arr){
+			$showstatus = (trim($product_plan_purchase_arr->purchase->esim->phone) != '' ? '<span class="dashicons dashicons-phone"></span>'.$product_plan_purchase_arr->purchase->esim->phone : '')?>
+			<h3><?php esc_html_e("eSim Code",'dataplans')?></h3>
 			<table height="100%" width="100%">
 				<tr>
-					<td><strong>Product</strong></td>
-					<td><strong>ESIM CODE</strong></td>
+					<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
+					<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><?php echo (trim($product_plan_purchase_arr->purchase->esim->phone) != '' ? '<span class="dashicons dashicons-phone"></span>'.$product_plan_purchase_arr->purchase->esim->phone : '')?></td>
+				<?php printf('<td>%s</td>',$product_plan_purchase_arr->purchase->planName)?>
+				<?php printf('<td><img src="%s"><br />%s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$showstatus)?>
 				</tr>
 			</table>
 			<?php

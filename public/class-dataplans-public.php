@@ -106,18 +106,18 @@ class DPWC_Dataplans_Public {
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		
 		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
-		<h2>Esim Data</h2>
+		<h2><?php esc_html_e("Esim Data",'dataplans')?></h2>
 
 			<table class="woocommerce-table shop_table gift_info">
-			<h3>eSim Code</h3>
+			<h3><?php esc_html_e("eSim Code",'dataplans')?></h3>
 				<table height="100%" width="100%">
 					<tr>
-						<td><strong>Product</strong></td>
-						<td><strong>ESIM CODE</strong></td>
+						<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
+						<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 					</tr>
 					<tr>
-						<td><?php echo $product_plan_purchase_arr->purchase->planName ?></td>
-						<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<?php printf('<td>%s</td>',$product_plan_purchase_arr->purchase->planName)?>
+					<?php printf('<td><img src="%s"><br /><span class="dashicons dashicons-phone"></span> %s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$product_plan_purchase_arr->purchase->esim->phone)?>
 					</tr>
 				</table>
 
@@ -213,8 +213,4 @@ class DPWC_Dataplans_Public {
 			
 		} // if(isset($settings_arr['api_access_token'])
 	}// function
-
-	
-
-
 }

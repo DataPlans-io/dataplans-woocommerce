@@ -23,8 +23,8 @@ if ( ! class_exists( 'DPWC_WC_Email_Customer_Low_Balance_Notification_Api', fals
 		public function __construct() {
 			$this->id             = 'low_balance_notification_api';
 			//$this->customer_email = true;
-			$this->title          = __( 'Low Balance Alert', 'woocommerce' );
-			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'woocommerce' );
+			$this->title          = __( 'Low Balance Alert', 'dataplans' );
+			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'dataplans' );
 			//$this->template_html  = 'emails/customer-completed-order.php';
 			//$this->template_plain = 'emails/plain/customer-completed-order.php';
 			$this->placeholders   = array(
@@ -135,7 +135,7 @@ if ( ! class_exists( 'DPWC_WC_Email_Customer_Low_Balance_Notification_Api', fals
 		 * @return string
 		 */
 		public function get_default_additional_content() {
-			return __( 'Thanks for shopping with us.', 'woocommerce' );
+			return __( 'Thanks for shopping with us.', 'dataplans' );
 		}
 	}
 

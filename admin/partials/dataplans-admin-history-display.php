@@ -27,15 +27,15 @@
             <thead>
                 <tr>
 
-                    <th>Date</th>
-                    <th>WC OID</th>
-                    <th>Status</th>
-                    <th>Plan</th>
-                    <th>Price</th>
-                    <th>Phone</th>
-                    <th>Serial</th>
-                    <th>Balance</th>
-                    <th>Action</th>
+                    <th><?php esc_html_e("Date",'dataplans')?></th>
+                    <th><?php esc_html_e("WC OID",'dataplans')?></th>
+                    <th><?php esc_html_e("Status",'dataplans')?></th>
+                    <th><?php esc_html_e("Plan",'dataplans')?></th>
+                    <th><?php esc_html_e("Price",'dataplans')?></th>
+                    <th><?php esc_html_e("Phone",'dataplans')?></th>
+                    <th><?php esc_html_e("Serial",'dataplans')?></th>
+                    <th><?php esc_html_e("Balance",'dataplans')?></th>
+                    <th><?php esc_html_e("Action",'dataplans')?></th>
                 </tr>
             </thead>
             <tbody>
@@ -52,15 +52,15 @@
                        // $order_get_items = $order->get_items();
                 ?>
                         <tr>
-                            <td style="text-align:center"><?php echo date('Y-m-d h:i a',strtotime($product_plan_purchase_arr->purchase->purchasedAt))?></td>
-                            <td style="text-align:center"><a title="View Order" href="./post.php?action=edit&post=<?php echo $order_id ?>"><?php echo $order_id ?></a></td>
-                            <td style="text-align:center"><?php echo ucfirst($get_status) ?></td>
-                            <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->planName ?></td>
-                            <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->currency.' '.$product_plan_purchase_arr->purchase->paid ?></td>
-                            <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->phone ?></td>
-                            <td style="text-align:center"><?php echo $product_plan_purchase_arr->purchase->esim->serial ?></td>
-                            <td style="text-align:center"><?php echo $product_plan_purchase_arr->availableBalance?></td>
-                            <td style="text-align:center"><a title="Resend Order Email" href="?page=dpio-history&dataplan_action=resend_email&oid=<?php echo $order_id ?>"><span class="dashicons dashicons-email"></span></a>  <a title="View QR Code" target="_blank" href="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl ?>"><span class="dashicons dashicons-media-code"></span></a> <a title="View Purchase" target="_blank" href="https://esims.dataplans.io/dashboard/purchases/<?php echo $product_plan_purchase_arr->purchase->purchaseId ?>"><span class="dashicons dashicons-welcome-view-site"></span></a></td>
+                            <?php printf('<td style="text-align:center">%s</td>',date('Y-m-d h:i a',strtotime($product_plan_purchase_arr->purchase->purchasedAt)))?>
+                            <?php printf('<td style="text-align:center"><a title="'.__('View Order','dataplans').'" href="./post.php?action=edit&post=%s">%s</a></td>',$order_id,$order_id)?>
+                            <?php printf('<td style="text-align:center">%s</td>',ucfirst($get_status))?>
+                            <?php printf('<td style="text-align:center">%s</td>',$product_plan_purchase_arr->purchase->planName)?>
+                            <?php printf('<td style="text-align:center">%s</td>',$product_plan_purchase_arr->purchase->currency.' '.$product_plan_purchase_arr->purchase->paid)?>
+                            <?php printf('<td style="text-align:center">%s</td>',$product_plan_purchase_arr->purchase->esim->phone)?>
+                            <?php printf('<td style="text-align:center">%s</td>',$product_plan_purchase_arr->purchase->esim->serial)?>
+                            <?php printf('<td style="text-align:center">%s</td>',$product_plan_purchase_arr->availableBalance)?>
+                            <?php printf('<td style="text-align:center"><a title="'.__('Resend Order Email','dataplans').'" href="?page=dpio-history&dataplan_action=resend_email&oid=%s"><span class="dashicons dashicons-email"></span></a>  <a title="'.__('View QR Code').'" target="_blank" href="%s"><span class="dashicons dashicons-media-code"></span></a> <a title="'.__('View Purchase','dataplans').'" target="_blank" href="https://esims.dataplans.io/dashboard/purchases/%s"><span class="dashicons dashicons-welcome-view-site"></span></a></td>',$order_id,$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$product_plan_purchase_arr->purchase->purchaseId)?>
                         </tr>
         <?php
                     } // if(product_plan_purchase_arr->purchase)
@@ -71,30 +71,17 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>WC OID</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Plan Slug</th>
-                    <th>Price</th>
-                    <th>Phone</th>
-                    <th>Serial</th>
-                    <th>Balance</th>
-                    <th>Action</th>
+                    <th><?php esc_html_e("WC OID",'dataplans')?></th>
+                    <th><?php esc_html_e("Date",'dataplans')?></th>
+                    <th><?php esc_html_e("Status",'dataplans')?></th>
+                    <th><?php esc_html_e("Plan Slug",'dataplans')?></th>
+                    <th><?php esc_html_e("Price",'dataplans')?></th>
+                    <th><?php esc_html_e("Phone",'dataplans')?></th>
+                    <th><?php esc_html_e("Serial",'dataplans')?></th>
+                    <th><?php esc_html_e("Balance",'dataplans')?></th>
+                    <th><?php esc_html_e("Action",'dataplans')?></th>
                 </tr>
             </tfoot>
         </table>
-
-    <script>
-        jQuery(document).ready(function() {
-            jQuery('#api_dataplans_orders_list').DataTable({
-        order: [[1, 'desc']]
-    });
-            setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 100);
-            setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 500);
-            setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 1000);
-            setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 5000);
-        }); // ready
-    </script>
-
     </div>
 </div>
