@@ -1,6 +1,6 @@
 <?php
 
-class DataPlansApiResource extends DataPlansObject
+class DPWC_DataPlansApiResource extends DataPlansObject
 {
 	// Request methods
 	const REQUEST_GET = 'GET';
@@ -96,7 +96,7 @@ class DataPlansApiResource extends DataPlansObject
 	 *
 	 * @throws Exception|DataPlansException
 	 *
-	 * @return DataPlansApiResource
+	 * @return DPWC_DataPlansApiResource
 	 */
 	protected function doDestroy($url)
 	{

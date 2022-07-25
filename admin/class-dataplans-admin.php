@@ -20,7 +20,7 @@
  * @subpackage Dataplans/admin
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_Admin {
+class DPWC_Dataplans_Admin {
 
 	/**
 	 * @var array
@@ -105,10 +105,10 @@ class Dataplans_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Dataplans_Loader as all of the hooks are defined
+		 * defined in DPWC_Dataplans_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Dataplans_Loader will then create the relationship
+		 * The DPWC_Dataplans_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -128,10 +128,10 @@ class Dataplans_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Dataplans_Loader as all of the hooks are defined
+		 * defined in DPWC_Dataplans_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Dataplans_Loader will then create the relationship
+		 * The DPWC_Dataplans_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -285,7 +285,7 @@ class Dataplans_Admin {
 
 	function woocommerce_before_order_itemmeta( ){
 
-		$order_id =  $_REQUEST['post'];
+		$order_id =  sanitize_text_field($_REQUEST['post']);
 
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
@@ -306,8 +306,8 @@ class Dataplans_Admin {
 
 
 	function sendemail_customer_completed_order_apiCBF($emails){
-		$emails['WC_Email_Customer_Low_Balance_Notification_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-api-low-balance-notification.php';
-		$emails['WC_Email_Customer_Completed_Order_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-completed-order.php';
+		$emails['DPWC_WC_Email_Customer_Low_Balance_Notification_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-api-low-balance-notification.php';
+		$emails['DPWC_WC_Email_Customer_Completed_Order_Api'] = include dataplans_PATH.'/admin/class-wc-email-customer-completed-order.php';
 		return $emails;
 	}
 
@@ -338,9 +338,10 @@ class Dataplans_Admin {
 
 
 
-	function run_WC_Email_Customer_Completed_Order_Api_CBF(){
+	function run_DPWC_WC_Email_Customer_Completed_Order_Api_CBF(){
 		if(isset($_GET['dataplan_action']) && isset($_GET['oid'])){
-			WC()->mailer()->emails['WC_Email_Customer_Completed_Order_Api']->trigger( $_GET['oid'], wc_get_order($_GET['oid']) );
+			$oid = sanitize_text_field($_GET['oid']);
+			WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api']->trigger($oid, wc_get_order($oid) );
 			
 			
 			//wp_mail("customer1@wp1.com","MAM Subj","MAM MAS Messageeeeeeeeeeee");
@@ -359,8 +360,8 @@ class Dataplans_Admin {
 		<script>
 			jQuery(document).ready(function(){
 				jQuery('.wc-email-settings-table-name').find('a').each(function(index, value) {
-					var resendemail_indexoff = (jQuery(value).attr('href').indexOf('wc_email_customer_completed_order_api'));
-					var lowbalemail_indexoff = (jQuery(value).attr('href').indexOf('wc_email_customer_low_balance_notification_api'));
+					var resendemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Completed_Order_Api'));
+					var lowbalemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Low_Balance_Notification_Api'));
 
 					if(resendemail_indexoff > 0)
 						jQuery(value).parent().parent().remove();
@@ -379,14 +380,14 @@ class Dataplans_Admin {
 	function save_select_api_product_planCBF($cur_post_id){
 		global $wpdb;
 		if(isset($_POST['selected_api_product_plan']))
-			update_metadata('post',$cur_post_id,'selected_api_product_plan',$_POST['selected_api_product_plan']);
+			update_metadata('post',$cur_post_id,'selected_api_product_plan',sanitize_text_field($_POST['selected_api_product_plan']));
 
 
 		if(isset($_POST['insertapi_infointo_desc'])){
 
 			$countries_coma_sep = '';
-			$selected_api_info = unserialize(base64_decode($_POST['selected_api_info']));
-			//die(print_r('selected_api_info<pre>').print_r($selected_api_info).print_r('</pre>').print_r('_POST<pre>').print_r($_POST).print_r('</pre>'));
+			$selected_api_info = unserialize(base64_decode(sanitize_text_field($_POST['selected_api_info'])));
+
 			$countries_arr_obj = $selected_api_info->countries;
 			
 			foreach ($countries_arr_obj as $key => $value)

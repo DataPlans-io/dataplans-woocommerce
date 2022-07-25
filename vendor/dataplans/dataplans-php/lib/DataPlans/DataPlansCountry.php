@@ -1,5 +1,5 @@
 <?php
-class DataPlansCountry extends DataPlansApiResource
+class DPWC_DataPlansCountry extends DPWC_DataPlansApiResource
 {
     const ENDPOINT = 'countries';
 
@@ -19,7 +19,7 @@ class DataPlansCountry extends DataPlansApiResource
     /**
      * Reload a country request
      *
-     * @see DataPlansApiResource::doReload()
+     * @see DPWC_DataPlansApiResource::doReload()
      */
     public function reload()
     {

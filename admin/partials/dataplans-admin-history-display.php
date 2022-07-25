@@ -12,12 +12,10 @@
 
     global $wpdb;
     $all_orders = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_type='shop_order' AND post_status != 'wc-cancelled' AND post_status != 'wc-failed' AND post_status != 'wc-refunded'");
-    //$email = WC()->mailer()->emails['WC_Email_Customer_Completed_Order_Api'];
+    //$email = WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api'];
 		//$email->trigger( 36, wc_get_order(36) );
-   // WC()->mailer()->emails['WC_Email_Customer_Completed_Order_Api']->trigger( "36", wc_get_order(36) );
+   // WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api']->trigger( "36", wc_get_order(36) );
 ?>
-        <script type='text/javascript' src='https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-        <link rel='stylesheet' href='https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css' media='all' />
 
 <div class="wrap dataplans">
 	<?php settings_errors(); ?>

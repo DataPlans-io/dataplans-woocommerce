@@ -20,7 +20,7 @@
  * @subpackage Dataplans/includes
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_Activator {
+class DPWC_Dataplans_Activator {
 
 	public static $default = array(
 		'environment'          => 0,
@@ -37,7 +37,7 @@ class Dataplans_Activator {
 	 */
 	public static function activate() {
 		add_option( DataplansConst::OPTIONS_NAME, self::$default );
-		Dataplans_Activator::update_balance();
+		DPWC_Dataplans_Activator::update_balance();
 	}
 
 	public static function update_balance(){	

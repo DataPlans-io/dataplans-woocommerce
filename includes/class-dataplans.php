@@ -27,7 +27,7 @@
  * @subpackage Dataplans/includes
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans {
+class DPWC_Dataplans {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Dataplans {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Dataplans_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      DPWC_Dataplans_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -86,10 +86,10 @@ class Dataplans {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Dataplans_Loader. Orchestrates the hooks of the plugin.
-	 * - Dataplans_i18n. Defines internationalization functionality.
-	 * - Dataplans_Admin. Defines all hooks for the admin area.
-	 * - Dataplans_Public. Defines all hooks for the public side of the site.
+	 * - DPWC_Dataplans_Loader. Orchestrates the hooks of the plugin.
+	 * - DPWC_Dataplans_i18n. Defines internationalization functionality.
+	 * - DPWC_Dataplans_Admin. Defines all hooks for the admin area.
+	 * - DPWC_Dataplans_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -122,14 +122,14 @@ class Dataplans {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-dataplans-public.php';
 
-		$this->loader = new Dataplans_Loader();
+		$this->loader = new DPWC_Dataplans_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Dataplans_i18n class in order to set the domain and to register the hook
+	 * Uses the DPWC_Dataplans_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Dataplans {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Dataplans_i18n();
+		$plugin_i18n = new DPWC_Dataplans_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,7 +152,7 @@ class Dataplans {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Dataplans_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new DPWC_Dataplans_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'init_addmetabox_select_api_product_planCBF' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_select_api_product_planCBF' );		
@@ -160,7 +160,7 @@ class Dataplans {
 		
 		
 		$this->loader->add_filter('woocommerce_email_classes', $plugin_admin, 'sendemail_customer_completed_order_apiCBF' );
-		$this->loader->add_action('init',$plugin_admin,'run_WC_Email_Customer_Completed_Order_Api_CBF');
+		$this->loader->add_action('init',$plugin_admin,'run_DPWC_WC_Email_Customer_Completed_Order_Api_CBF');
 		$this->loader->add_action( 'woocommerce_before_order_itemmeta', $plugin_admin,'woocommerce_before_order_itemmeta');
 		$this->loader->add_action( 'admin_notices', $plugin_admin,'removecustom_wc_email_settings_resend_lowbal_CBF');
 
@@ -187,7 +187,7 @@ class Dataplans {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Dataplans_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new DPWC_Dataplans_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -252,7 +252,7 @@ class Dataplans {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Dataplans_Loader    Orchestrates the hooks of the plugin.
+	 * @return    DPWC_Dataplans_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

@@ -1,6 +1,6 @@
 <?php
 
-class DataPlansException extends Exception
+class DPWC_DataPlansException extends Exception
 {
     private $_dataPlansError = null;
 
@@ -89,18 +89,18 @@ class DataPlansException extends Exception
     }
 }
 
-class DataPlansAuthenticationFailureException extends DataPlansException { }
-class DataPlansBadRequestException extends DataPlansException { }
-class DataPlansNotFoundException extends DataPlansException { }
-class DataPlansUsedTokenException extends DataPlansException { }
-class DataPlansInvalidCardException extends DataPlansException { }
-class DataPlansInvalidCardTokenException extends DataPlansException { }
-class DataPlansMissingCardException extends DataPlansException { }
-class DataPlansInvalidChargeException extends DataPlansException { }
-class DataPlansFailedCaptureException extends DataPlansException { }
-class DataPlansFailedFraudCheckException extends DataPlansException { }
-class DataPlansFailedRefundException extends DataPlansException { }
-class DataPlansInvalidLinkException extends DataPlansException { }
-class DataPlansInvalidRecipientException extends DataPlansException { }
-class DataPlansInvalidBankAccountException extends DataPlansException { }
-class DataPlansUndefinedException extends DataPlansException { }
+class DataPlansAuthenticationFailureException extends DPWC_DataPlansException { }
+class DataPlansBadRequestException extends DPWC_DataPlansException { }
+class DataPlansNotFoundException extends DPWC_DataPlansException { }
+class DataPlansUsedTokenException extends DPWC_DataPlansException { }
+class DataPlansInvalidCardException extends DPWC_DataPlansException { }
+class DataPlansInvalidCardTokenException extends DPWC_DataPlansException { }
+class DataPlansMissingCardException extends DPWC_DataPlansException { }
+class DataPlansInvalidChargeException extends DPWC_DataPlansException { }
+class DataPlansFailedCaptureException extends DPWC_DataPlansException { }
+class DataPlansFailedFraudCheckException extends DPWC_DataPlansException { }
+class DataPlansFailedRefundException extends DPWC_DataPlansException { }
+class DataPlansInvalidLinkException extends DPWC_DataPlansException { }
+class DataPlansInvalidRecipientException extends DPWC_DataPlansException { }
+class DataPlansInvalidBankAccountException extends DPWC_DataPlansException { }
+class DataPlansUndefinedException extends DPWC_DataPlansException { }

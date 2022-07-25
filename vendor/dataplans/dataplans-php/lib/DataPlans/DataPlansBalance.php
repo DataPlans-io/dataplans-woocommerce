@@ -1,5 +1,5 @@
 <?php
-class DataPlansBalance extends DataPlansApiResource
+class DPWC_DataPlansBalance extends DPWC_DataPlansApiResource
 {
     const ENDPOINT = 'accountBalance';
 
@@ -18,7 +18,7 @@ class DataPlansBalance extends DataPlansApiResource
     /**
      * Reload an account balance request
      *
-     * @see DataPlansApiResource::doReload()
+     * @see DPWC_DataPlansApiResource::doReload()
      */
     public function reload()
     {

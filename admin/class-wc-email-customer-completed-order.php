@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
+if ( ! class_exists( 'DPWC_WC_Email_Customer_Completed_Order_Api', false ) ) :
 
 	/**
 	 * Customer Completed Order Email.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 	 * @package     WooCommerce\Classes\Emails
 	 * @extends     WC_Email
 	 */
-	class WC_Email_Customer_Completed_Order_Api extends WC_Email {
+	class DPWC_WC_Email_Customer_Completed_Order_Api extends WC_Email {
 
 		/**
 		 * Constructor.
@@ -143,4 +143,4 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 
 endif;
 
-return new WC_Email_Customer_Completed_Order_Api();
+return new DPWC_WC_Email_Customer_Completed_Order_Api();

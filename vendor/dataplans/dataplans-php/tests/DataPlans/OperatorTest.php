@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class OperatorTest extends TestConfig
+class DPWC_OperatorTest extends TestConfig
 {
     /**
      * @test
@@ -9,9 +9,9 @@ class OperatorTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansOperator', 'retrieve'), 'Method retrieve not exists');
-        $this->assertTrue(method_exists('DataPlansOperator', 'reload'), 'Method reload not exists');
-        $this->assertTrue(method_exists('DataPlansOperator', 'getUrl'), 'Method getUrl not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansOperator', 'retrieve'), 'Method retrieve not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansOperator', 'reload'), 'Method reload not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansOperator', 'getUrl'), 'Method getUrl not exists');
     }
 
     /**
@@ -20,9 +20,9 @@ class OperatorTest extends TestConfig
      */
     public function retrieve_object()
     {
-        $object = DataPlansOperator::retrieve();
+        $object = DPWC_DataPlansOperator::retrieve();
 
-        $this->assertInstanceOf('DataPlansOperator', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansOperator', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }
@@ -34,10 +34,10 @@ class OperatorTest extends TestConfig
      */
     public function reload()
     {
-        $object = DataPlansOperator::retrieve();
+        $object = DPWC_DataPlansOperator::retrieve();
         $object->reload();
 
-        $this->assertInstanceOf('DataPlansOperator', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansOperator', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }
@@ -50,9 +50,9 @@ class OperatorTest extends TestConfig
     public function retrieve_object_by_slug()
     {
         $slug = 'ais';
-        $object = DataPlansOperator::retrieve($slug);
+        $object = DPWC_DataPlansOperator::retrieve($slug);
 
-        $this->assertInstanceOf('DataPlansOperator', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansOperator', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
             $this->assertArrayHasKey('retailPrice', $object[0], 'Key retailPrice not exist');

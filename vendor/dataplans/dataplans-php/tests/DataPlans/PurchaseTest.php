@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class PurchaseTest extends TestConfig
+class DPWC_PurchaseTest extends TestConfig
 {
     /**
      * @test
@@ -9,10 +9,10 @@ class PurchaseTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansPurchase', 'retrieve'));
-        $this->assertTrue(method_exists('DataPlansPurchase', 'create'));
-        $this->assertTrue(method_exists('DataPlansPurchase', 'reload'));
-        $this->assertTrue(method_exists('DataPlansPurchase', 'getUrl'));
+        $this->assertTrue(method_exists('DPWC_DataPlansPurchase', 'retrieve'));
+        $this->assertTrue(method_exists('DPWC_DataPlansPurchase', 'create'));
+        $this->assertTrue(method_exists('DPWC_DataPlansPurchase', 'reload'));
+        $this->assertTrue(method_exists('DPWC_DataPlansPurchase', 'getUrl'));
     }
 
     /**
@@ -21,7 +21,7 @@ class PurchaseTest extends TestConfig
      */
     public function create()
     {
-        $purchase = DataPlansPurchase::create(array('slug' => 'sim2fly-asia'));
+        $purchase = DPWC_DataPlansPurchase::create(array('slug' => 'sim2fly-asia'));
 
         $this->assertArrayHasKey('purchase', $purchase, 'Purchase not complete');
         $this->assertArrayHasKey('purchaseId', $purchase['purchase'], 'purchaseId not provide');
@@ -34,7 +34,7 @@ class PurchaseTest extends TestConfig
      */
     public function retrieve()
     {
-        $purchase = DataPlansPurchase::retrieve('30ee2a9b-d9ca-4b42-9a04-7fdc798e4237');
+        $purchase = DPWC_DataPlansPurchase::retrieve('30ee2a9b-d9ca-4b42-9a04-7fdc798e4237');
 
         $this->assertArrayHasKey('purchaseId', $purchase, 'Purchase response not has purtchaseId');
         $this->assertArrayHasKey('esim', $purchase, 'eSim not provide');
