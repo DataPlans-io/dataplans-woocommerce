@@ -172,32 +172,26 @@ class DPWC_Dataplans_Admin {
 			$result = json_decode($result);
 			//echo '<pre>'.print_r($cur_postObj).'</pre>';
 			$selected_api_product_plan_obj = '';
-			if(isset($result[0])){
-				echo '<select name="selected_api_product_plan">
-						<option value="no_selected_api_product_plan">None</option>';
+			if(isset($result[0])){?>
+				<select name="selected_api_product_plan">
+						<option value="no_selected_api_product_plan"><?php esc_html_e("None",'dataplans');?></option><?php
 				
-				foreach ($result as $api_prod_obj) {?>
-					<option value="<?php echo $api_prod_obj->slug?>" <?php echo ($selected_api_pplan == $api_prod_obj->slug ? 'selected' : '')?>><?php echo ($api_prod_obj->name.' - '.$api_prod_obj->retailPrice.' '.$api_prod_obj->priceCurrency)?></option><?php
-				} // foreach ($result as $api_prod_obj)
-				echo '</select> ';
+				foreach ($result as $api_prod_obj) {
+					$selct_var = ($selected_api_pplan == $api_prod_obj->slug ? 'selected' : '');
+					printf('<option value="%s" %s> %s </option>',$api_prod_obj->slug,$selct_var,$api_prod_obj->name.' - '.$api_prod_obj->retailPrice.' '.$api_prod_obj->priceCurrency);
+				} // foreach ($result as $api_prod_obj)?>
+				</select>
 
-				echo '<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>';
+				<?php esc_html_e('<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>','dataplans');
 				
 				foreach ($result as $api_prod_obj){
 					if($selected_api_pplan == $api_prod_obj->slug){
 						$selected_api_product_plan_obj = base64_encode(serialize($api_prod_obj));
 
-						echo ' <input type="hidden" name="selected_api_info" value="'.$selected_api_product_plan_obj.'" />';
+						printf(' <input type="hidden" name="selected_api_info" value="%s" />',$selected_api_product_plan_obj);
 						break;
 					}
 				}
-
-
-				// if($selected_api_product_plan_obj == ''){
-				// 	$selected_api_product_plan_obj = base64_encode(serialize($result[0]));
-				// 	echo ' <input type="hidden" name="selected_api_info" value="'.$selected_api_product_plan_obj.'" />';
-				// }
-
 
 			} // if(isset($result[0]))
 
@@ -213,63 +207,47 @@ class DPWC_Dataplans_Admin {
 		$product_plan_purchase_arr = get_metadata('post',$cur_postObj->ID,'selected_api_product_plan_purchase_array',true);
 		$settings_arr = get_option("dpio_options");
 		if(isset($settings_arr['api_access_token']) && trim($settings_arr['api_access_token']) != ''){
-			// $url = "https://app.dataplans.io/api/v1/purchases/".$product_plan_purchase_id;
-			// $curl = curl_init($url);
-			// curl_setopt($curl, CURLOPT_URL, $url);
-
-			// $headers = [
-			// 	'accept: application/json',				
-			// 	'Authorization: '.$settings_arr['api_access_token']
-			// ];
-			// curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-			// curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			// curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			// curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			// $result = curl_exec($curl);
-			// $result = json_decode($result);
-			// curl_close($curl);
 			
 			if(isset($product_plan_purchase_arr->purchase)){?>
 				<table>
 					<tr>
-						<th>WooCommerce Order ID</th>
+						<th><?php esc_html_e("WooCommerce Order ID",'dataplans')?></th>
 						<td><?php echo $cur_postObj->ID?></td>
 					</tr>
 					<tr>
-						<th>Purchase Date</th>
+						<th><?php esc_html_e("Purchase Date",'dataplans')?></th>
 						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->purchasedAt))?></td>
 					</tr>
 					<tr>
-						<th>Expiry Date</th>
+						<th><?php esc_html_e("Expiry Date",'dataplans')?></th>
 						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->esim->expiryDate))?></td>
 					</tr>
 					<tr>
-						<th>Plan Slug</th>
+						<th><?php esc_html_e("Plan Slug",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->planSlug?></td>
 					</tr>
 					<tr>
-						<th>Retail Price</th>
+						<th><?php esc_html_e("Retail Price",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->retail?></td>
 					</tr>
 					<tr>
-						<th>Paid</th>
+						<th><?php esc_html_e("Paid",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->paid?></td>
 					</tr>
 					<tr>
-						<th>Currency</th>
+						<th><?php esc_html_e("Currency",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->currency?></td>
 					</tr>
 					<tr>
-						<th>Phone</th>
+						<th><?php esc_html_e("Phone",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
 					</tr>
 					<tr>
-						<th>Serial</th>
+						<th><?php esc_html_e("Serial",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->esim->serial?><</td>
 					</tr>
 					<tr>
-						<th>LPA Value</th>
+						<th><?php esc_html_e("LPA Value",'dataplans')?></th>
 						<td><?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?></td>
 					</tr>
 				</table>
