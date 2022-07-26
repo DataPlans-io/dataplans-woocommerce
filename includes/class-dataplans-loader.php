@@ -21,7 +21,7 @@
  * @subpackage Dataplans/includes
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_Loader {
+class DPWC_Dataplans_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

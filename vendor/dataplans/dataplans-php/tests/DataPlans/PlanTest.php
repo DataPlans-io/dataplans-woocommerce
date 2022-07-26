@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class PlanTest extends TestConfig
+class DPWC_PlanTest extends TestConfig
 {
     protected $slug;
     /**
@@ -10,9 +10,9 @@ class PlanTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansPlan', 'retrieve'), 'Method retrieve not exists');
-        $this->assertTrue(method_exists('DataPlansPlan', 'reload'), 'Method reload not exists');
-        $this->assertTrue(method_exists('DataPlansPlan', 'getUrl'), 'Method getUrl not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansPlan', 'retrieve'), 'Method retrieve not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansPlan', 'reload'), 'Method reload not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansPlan', 'getUrl'), 'Method getUrl not exists');
     }
 
     /**
@@ -21,9 +21,9 @@ class PlanTest extends TestConfig
      */
     public function retrieve_object()
     {
-        $object = DataPlansPlan::retrieve();
+        $object = DPWC_DataPlansPlan::retrieve();
 
-        $this->assertInstanceOf('DataPlansPlan', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansPlan', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }
@@ -35,10 +35,10 @@ class PlanTest extends TestConfig
      */
     public function reload()
     {
-        $object = DataPlansPlan::retrieve();
+        $object = DPWC_DataPlansPlan::retrieve();
         $object->reload();
 
-        $this->assertInstanceOf('DataPlansPlan', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansPlan', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }
@@ -51,9 +51,9 @@ class PlanTest extends TestConfig
     public function retrieve_object_by_slug()
     {
         $slug = 'dtac-tourist-sim';
-        $object = DataPlansPlan::retrieve($slug);
+        $object = DPWC_DataPlansPlan::retrieve($slug);
 
-        $this->assertInstanceOf('DataPlansPlan', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansPlan', $object, 'Retrieve data is invalid');
         $this->assertArrayHasKey('slug', $object, 'Key slug not exist');
         $this->assertEquals($slug, $object['slug']);
     }

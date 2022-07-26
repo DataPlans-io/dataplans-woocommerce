@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
+if ( ! class_exists( 'DPWC_WC_Email_Customer_Completed_Order_Api', false ) ) :
 
 	/**
 	 * Customer Completed Order Email.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 	 * @package     WooCommerce\Classes\Emails
 	 * @extends     WC_Email
 	 */
-	class WC_Email_Customer_Completed_Order_Api extends WC_Email {
+	class DPWC_WC_Email_Customer_Completed_Order_Api extends WC_Email {
 
 		/**
 		 * Constructor.
@@ -29,8 +29,8 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 		public function __construct() {
 			$this->id             = 'customer_completed_order_api';
 			$this->customer_email = true;
-			$this->title          = __( 'Resend Order', 'woocommerce' );
-			$this->description    = __( 'Order complete emails are sent to customers when their orders are marked completed and usually indicate that their orders have been shipped.', 'woocommerce' );
+			$this->title          = __( 'Resend Order', 'dataplans' );
+			$this->description    = __( 'Order complete emails are sent to customers when their orders are marked completed and usually indicate that their orders have been shipped.', 'dataplans' );
 			$this->template_html  = 'emails/customer-completed-order.php';
 			$this->template_plain = 'emails/plain/customer-completed-order.php';
 			$this->placeholders   = array(
@@ -79,7 +79,7 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 		 * @return string
 		 */
 		public function get_default_subject() {
-			return __( 'Your {site_title} order is now complete', 'woocommerce' );
+			return __( 'Your {site_title} order is now complete', 'dataplans' );
 		}
 
 		/**
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 		 * @return string
 		 */
 		public function get_default_heading() {
-			return __( 'Thanks for shopping with us', 'woocommerce' );
+			return __( 'Thanks for shopping with us', 'dataplans' );
 		}
 
 		/**
@@ -137,10 +137,10 @@ if ( ! class_exists( 'WC_Email_Customer_Completed_Order_Api', false ) ) :
 		 * @return string
 		 */
 		public function get_default_additional_content() {
-			return __( 'Thanks for shopping with us.', 'woocommerce' );
+			return __( 'Thanks for shopping with us.', 'dataplans' );
 		}
 	}
 
 endif;
 
-return new WC_Email_Customer_Completed_Order_Api();
+return new DPWC_WC_Email_Customer_Completed_Order_Api();

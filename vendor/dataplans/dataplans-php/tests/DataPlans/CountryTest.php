@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class CountryTest extends TestConfig
+class DPWC_CountryTest extends TestConfig
 {
     /**
      * @test
@@ -9,9 +9,9 @@ class CountryTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansCountry', 'retrieve'), 'Method retrieve not exists');
-        $this->assertTrue(method_exists('DataPlansCountry', 'reload'), 'Method reload not exists');
-        $this->assertTrue(method_exists('DataPlansCountry', 'getUrl'), 'Method getUrl not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansCountry', 'retrieve'), 'Method retrieve not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansCountry', 'reload'), 'Method reload not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansCountry', 'getUrl'), 'Method getUrl not exists');
     }
 
     /**
@@ -20,9 +20,9 @@ class CountryTest extends TestConfig
      */
     public function retrieve_object()
     {
-        $object = DataPlansCountry::retrieve();
+        $object = DPWC_DataPlansCountry::retrieve();
 
-        $this->assertInstanceOf('DataPlansCountry', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansCountry', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('countryCode', $object[0], 'Key countryCode not exist');
         }
@@ -34,10 +34,10 @@ class CountryTest extends TestConfig
      */
     public function reload()
     {
-        $object = DataPlansCountry::retrieve();
+        $object = DPWC_DataPlansCountry::retrieve();
         $object->reload();
 
-        $this->assertInstanceOf('DataPlansCountry', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansCountry', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('countryCode', $object[0], 'Key countryCode not exist');
         }
@@ -50,9 +50,9 @@ class CountryTest extends TestConfig
     public function retrieve_object_by_slug()
     {
         $slug = 'th';
-        $object = DataPlansCountry::retrieve($slug);
+        $object = DPWC_DataPlansCountry::retrieve($slug);
 
-        $this->assertInstanceOf('DataPlansCountry', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansCountry', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
             $this->assertArrayHasKey('retailPrice', $object[0], 'Key retailPrice not exist');

@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class BalanceTest extends TestConfig
+class DPWC_BalanceTest extends TestConfig
 {
     /**
      * @test
@@ -9,9 +9,9 @@ class BalanceTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansBalance', 'retrieve'));
-        $this->assertTrue(method_exists('DataPlansBalance', 'reload'));
-        $this->assertTrue(method_exists('DataPlansBalance', 'getUrl'));
+        $this->assertTrue(method_exists('DPWC_DataPlansBalance', 'retrieve'));
+        $this->assertTrue(method_exists('DPWC_DataPlansBalance', 'reload'));
+        $this->assertTrue(method_exists('DPWC_DataPlansBalance', 'getUrl'));
     }
 
     /**
@@ -20,7 +20,7 @@ class BalanceTest extends TestConfig
      */
     public function retrieve_object()
     {
-        $balance = DataPlansBalance::retrieve();
+        $balance = DPWC_DataPlansBalance::retrieve();
 
         $this->assertArrayHasKey('availableBalance', $balance, 'Key availableBalance not exist');
         $this->assertFinite(floatval($balance['availableBalance']), 'availableBalance value must be finite value');
@@ -32,7 +32,7 @@ class BalanceTest extends TestConfig
      */
     public function reload()
     {
-        $balance = DataPlansBalance::retrieve();
+        $balance = DPWC_DataPlansBalance::retrieve();
         $balance->reload();
 
         $this->assertArrayHasKey('availableBalance', $balance, 'Key availableBalance not exist');

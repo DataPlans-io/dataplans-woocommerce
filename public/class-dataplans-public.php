@@ -20,7 +20,7 @@
  * @subpackage Dataplans/public
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_Public {
+class DPWC_Dataplans_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,16 @@ class Dataplans_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Dataplans_Loader as all of the hooks are defined
+		 * defined in DPWC_Dataplans_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Dataplans_Loader will then create the relationship
+		 * The DPWC_Dataplans_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dataplans-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, 'https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +89,16 @@ class Dataplans_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Dataplans_Loader as all of the hooks are defined
+		 * defined in DPWC_Dataplans_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Dataplans_Loader will then create the relationship
+		 * The DPWC_Dataplans_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dataplans-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -104,18 +106,18 @@ class Dataplans_Public {
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		
 		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
-		<h2>Esim Data</h2>
+		<h2><?php esc_html_e("Esim Data",'dataplans')?></h2>
 
 			<table class="woocommerce-table shop_table gift_info">
-			<h3>eSim Code</h3>
+			<h3><?php esc_html_e("eSim Code",'dataplans')?></h3>
 				<table height="100%" width="100%">
 					<tr>
-						<td><strong>Product</strong></td>
-						<td><strong>ESIM CODE</strong></td>
+						<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
+						<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 					</tr>
 					<tr>
-						<td><?php echo $product_plan_purchase_arr->purchase->planName ?></td>
-						<td><img src="<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeDataUrl?>"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<?php printf('<td>%s</td>',$product_plan_purchase_arr->purchase->planName)?>
+					<?php printf('<td><img src="%s"><br /><span class="dashicons dashicons-phone"></span> %s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$product_plan_purchase_arr->purchase->esim->phone)?>
 					</tr>
 				</table>
 
@@ -156,7 +158,7 @@ class Dataplans_Public {
 
 		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
 		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert'])
-			WC()->mailer()->emails['WC_Email_Customer_Low_Balance_Notification_Api']->trigger( $order_id, wc_get_order($order_id) );
+			WC()->mailer()->emails['DPWC_WC_Email_Customer_Low_Balance_Notification_Api']->trigger( $order_id, wc_get_order($order_id) );
 		
 
 		if(strlen($flag_selected_api_product_plan) > 5)
@@ -211,8 +213,4 @@ class Dataplans_Public {
 			
 		} // if(isset($settings_arr['api_access_token'])
 	}// function
-
-	
-
-
 }

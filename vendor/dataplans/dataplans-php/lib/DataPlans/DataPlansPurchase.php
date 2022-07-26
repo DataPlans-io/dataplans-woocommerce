@@ -1,5 +1,5 @@
 <?php
-class DataPlansPurchase extends DataPlansApiResource
+class DPWC_DataPlansPurchase extends DPWC_DataPlansApiResource
 {
     const ENDPOINT = 'purchases';
 
@@ -31,7 +31,7 @@ class DataPlansPurchase extends DataPlansApiResource
     /**
      * Reload a plan request
      *
-     * @see DataPlansApiResource::doReload()
+     * @see DPWC_DataPlansApiResource::doReload()
      */
     public function reload()
     {

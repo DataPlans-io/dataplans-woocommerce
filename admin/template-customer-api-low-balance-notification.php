@@ -53,9 +53,9 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 			curl_close($curl);
 
 ?>
-<p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( get_option("blogname") ) ); ?></p>
-<p><?php esc_html_e( 'Low Balance Alert. The Balance Must be greater than '.$settings_arr['balancelimit_alert'], 'woocommerce' ); ?></p>
-<h3><?php esc_html_e( 'The Current Balance is: '.$dplan_curbalance, 'woocommerce' ); ?></h3>
+<p><?php printf( esc_html__( 'Hi %s,', 'dataplans' ), esc_html( get_option("blogname") ) ); ?></p>
+<p><?php esc_html_e( 'Low Balance Alert. The Balance Must be greater than '.$settings_arr['balancelimit_alert'], 'dataplans' ); ?></p>
+<h3><?php esc_html_e( 'The Current Balance is: '.$dplan_curbalance, 'dataplans' ); ?></h3>
 
 <?php
 

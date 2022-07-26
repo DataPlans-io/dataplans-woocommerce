@@ -16,7 +16,7 @@
  * Plugin Name:       DataPlans eSIMs for WooCommerce
  * Plugin URI:        https://esims.gitbook.io/dataplans/plugins
  * Description:       Sell eSIMs for digital delivery with WooCommerce and DataPlans.io
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            DataPlans
  * Author URI:        https://dataplans.io/
  * License:           GPL-2.0+
@@ -35,8 +35,8 @@ if ( ! defined( 'WPINC' ) ) {
  */
 require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
 
-register_activation_hook( __FILE__, 'activate_dataplans' );
-register_deactivation_hook( __FILE__, 'deactivate_dataplans' );
+register_activation_hook( __FILE__, 'dpwc_activate_dataplans' );
+register_deactivation_hook( __FILE__, 'dpwc_deactivate_dataplans' );
 
 
 /**
@@ -55,18 +55,18 @@ define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
  * The code that runs during plugin activation.
  * This action is documented in includes/class-dataplans-activator.php
  */
-function activate_dataplans() {
+function dpwc_activate_dataplans() {
 	require_once dataplans_PATH . '/includes/class-dataplans-activator.php';
-	Dataplans_Activator::activate();
+	DPWC_Dataplans_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-dataplans-deactivator.php
  */
-function deactivate_dataplans() {
+function dpwc_deactivate_dataplans() {
 	require_once dataplans_PATH . '/includes/class-dataplans-deactivator.php';
-	Dataplans_Deactivator::deactivate();
+	DPWC_Dataplans_Deactivator::deactivate();
 }
 
 
@@ -86,11 +86,11 @@ require dataplans_PATH . '/includes/class-dataplans.php';
  *
  * @since    1.0.0
  */
-function run_dataplans() {
+function dpwc_run_dataplans() {
 
-	$plugin = new Dataplans();
+	$plugin = new DPWC_Dataplans();
 	$plugin->run();
 
 }
 
-run_dataplans();
+dpwc_run_dataplans();

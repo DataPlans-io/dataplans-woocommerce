@@ -24,7 +24,7 @@
  * @subpackage Dataplans/includes
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_i18n {
+class DPWC_Dataplans_i18n {
 
 
 	/**

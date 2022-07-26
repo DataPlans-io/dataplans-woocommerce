@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__).'/TestConfig.php';
 
-class RegionTest extends TestConfig
+class DPWC_RegionTest extends TestConfig
 {
     /**
      * @test
@@ -9,9 +9,9 @@ class RegionTest extends TestConfig
      */
     public function method_exists()
     {
-        $this->assertTrue(method_exists('DataPlansRegion', 'retrieve'), 'Method retrieve not exists');
-        $this->assertTrue(method_exists('DataPlansRegion', 'reload'), 'Method reload not exists');
-        $this->assertTrue(method_exists('DataPlansRegion', 'getUrl'), 'Method getUrl not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansRegion', 'retrieve'), 'Method retrieve not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansRegion', 'reload'), 'Method reload not exists');
+        $this->assertTrue(method_exists('DPWC_DataPlansRegion', 'getUrl'), 'Method getUrl not exists');
     }
 
     /**
@@ -20,9 +20,9 @@ class RegionTest extends TestConfig
      */
     public function retrieve_object()
     {
-        $object = DataPlansRegion::retrieve();
+        $object = DPWC_DataPlansRegion::retrieve();
 
-        $this->assertInstanceOf('DataPlansRegion', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansRegion', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }
@@ -34,10 +34,10 @@ class RegionTest extends TestConfig
      */
     public function reload()
     {
-        $object = DataPlansRegion::retrieve();
+        $object = DPWC_DataPlansRegion::retrieve();
         $object->reload();
 
-        $this->assertInstanceOf('DataPlansRegion', $object, 'Retrieve data is invalid');
+        $this->assertInstanceOf('DPWC_DataPlansRegion', $object, 'Retrieve data is invalid');
         if (!empty($object)) {
             $this->assertArrayHasKey('slug', $object[0], 'Key slug not exist');
         }

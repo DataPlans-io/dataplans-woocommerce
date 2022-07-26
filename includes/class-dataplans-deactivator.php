@@ -20,7 +20,7 @@
  * @subpackage Dataplans/includes
  * @author     DataPlans.io <hi@dataplans.io>
  */
-class Dataplans_Deactivator {
+class DPWC_Dataplans_Deactivator {
 
 	/**
 	 * Short Description. (use period)

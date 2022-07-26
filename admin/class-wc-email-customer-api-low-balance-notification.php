@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) ) :
+if ( ! class_exists( 'DPWC_WC_Email_Customer_Low_Balance_Notification_Api', false ) ) :
 
 	/**
 	 * Customer Completed Order Email.
@@ -15,7 +15,7 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 	 * @package     WooCommerce\Classes\Emails
 	 * @extends     WC_Email
 	 */
-	class WC_Email_Customer_Low_Balance_Notification_Api extends WC_Email {
+	class DPWC_WC_Email_Customer_Low_Balance_Notification_Api extends WC_Email {
 
 		/**
 		 * Constructor.
@@ -23,8 +23,8 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 		public function __construct() {
 			$this->id             = 'low_balance_notification_api';
 			//$this->customer_email = true;
-			$this->title          = __( 'Low Balance Alert', 'woocommerce' );
-			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'woocommerce' );
+			$this->title          = __( 'Low Balance Alert', 'dataplans' );
+			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'dataplans' );
 			//$this->template_html  = 'emails/customer-completed-order.php';
 			//$this->template_plain = 'emails/plain/customer-completed-order.php';
 			$this->placeholders   = array(
@@ -135,10 +135,10 @@ if ( ! class_exists( 'WC_Email_Customer_Low_Balance_Notification_Api', false ) )
 		 * @return string
 		 */
 		public function get_default_additional_content() {
-			return __( 'Thanks for shopping with us.', 'woocommerce' );
+			return __( 'Thanks for shopping with us.', 'dataplans' );
 		}
 	}
 
 endif;
 
-return new WC_Email_Customer_Low_Balance_Notification_Api();
+return new DPWC_WC_Email_Customer_Low_Balance_Notification_Api();

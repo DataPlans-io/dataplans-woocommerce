@@ -28,4 +28,17 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
+
+	///////// START admin-history-display.php //////
+	 jQuery(document).ready(function() {
+		jQuery('#api_dataplans_orders_list').DataTable({
+	order: [[1, 'desc']]
+});
+		setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 100);
+		setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 500);
+		setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 1000);
+		setTimeout(function(){jQuery(".dataTables_length").attr("style","display:none")}, 5000);
+	}); // ready
+
+		///////// END admin-history-display.php //////
 })( jQuery );

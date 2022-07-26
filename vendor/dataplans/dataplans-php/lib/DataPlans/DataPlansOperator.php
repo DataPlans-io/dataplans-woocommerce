@@ -1,5 +1,5 @@
 <?php
-class DataPlansOperator extends DataPlansApiResource
+class DPWC_DataPlansOperator extends DPWC_DataPlansApiResource
 {
     const ENDPOINT = 'operators';
 
@@ -19,7 +19,7 @@ class DataPlansOperator extends DataPlansApiResource
     /**
      * Reload a operator request
      *
-     * @see DataPlansApiResource::doReload()
+     * @see DPWC_DataPlansApiResource::doReload()
      */
     public function reload()
     {
