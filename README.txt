@@ -64,6 +64,7 @@ Please check our [Help Pages](https://esims.gitbook.io/dataplans/ "Help"). See t
 * version/ wp version conflict fixed
 * files js/css called locally
 * nonce added
+* curl removed
 
 
 

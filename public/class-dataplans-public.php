@@ -130,29 +130,22 @@ class DPWC_Dataplans_Public {
 		else
 			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
 		
-		 $curl = curl_init($url);
-		 curl_setopt($curl, CURLOPT_URL, $url);
-		 $headers = [
-				'accept: application/json',				
-				'Authorization: '.$settings_arr['api_access_token']
-			];
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		$result = curl_exec($curl);
-		$result = json_decode($result);
+			$args = array(
+				'headers'     => array(
+					'Authorization' => $settings_arr['api_access_token']
+				),
+			); 
+	
+				$http = _wp_http_get_object();
+		
+				$result = $http->get( $url, $args );
+
+				$result = json_decode($result['body']);
 
 		if(isset($result->availableBalance))
 			$dplan_curbalance = $result->availableBalance;
 		else
 			$dplan_curbalance = 0;
-
-
-
-
-		curl_close($curl);
-		
 
 		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
 		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert'])
@@ -177,28 +170,26 @@ class DPWC_Dataplans_Public {
 				$url = "https://app.dataplans.io/api/v1/purchases";
 			else
 				$url = "https://sandbox.dataplans.io/api/v1/purchases";
-				
-			$curl = curl_init($url);
-			curl_setopt($curl, CURLOPT_URL, $url);
+			
+				$postRequest = array(
+					'slug' => $selected_api_pplan,
+					'includeQRDataURL' => "true"
+				);
+				$args = array(
+					'body'    => $postRequest,
+					'headers'     => array(
+						'Authorization' => $settings_arr['api_access_token']
+					),
+				); 
+		
+					$http = _wp_http_get_object();
+			
+					$result = $http->post( $url, $args );
+	
+					$result = json_decode($result['body']);
+	
 
-			$headers = [
-				'accept: application/json',				
-				'Authorization: '.$settings_arr['api_access_token']
-			];
-			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-						
-			$postRequest = array(
-				'slug' => $selected_api_pplan,
-				'includeQRDataURL' => "true"
-			);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
-
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			$result = curl_exec($curl);
-			$result = json_decode($result);
 			if(isset($result->purchase)){
 				update_metadata('post',$order_id,'selected_api_product_plan_purchase_id',$result->purchase->purchaseId);
 				update_metadata('post',$order_id,'selected_api_product_plan_purchase_qrcode',$result->purchase->esim->qrCodeString);

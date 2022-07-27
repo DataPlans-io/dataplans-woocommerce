@@ -156,21 +156,22 @@ class DPWC_Dataplans_Admin {
 				$url = "https://app.dataplans.io/api/v1/plans";
 			else
 				$url = "https://sandbox.dataplans.io/api/v1/plans";
-			$curl = curl_init($url);
-			curl_setopt($curl, CURLOPT_URL, $url);
 
-			$headers = [
-				'accept: application/json',				
-				'Authorization: '.$settings_arr['api_access_token']
-			];
+			$args = array(
+				'headers'     => array(
+					'Authorization' => $settings_arr['api_access_token']
+				),
+			); 
+	
+				$http = _wp_http_get_object();
+		
+				$result = $http->get( $url, $args );
 
-			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			$result = curl_exec($curl);
-			$result = json_decode($result);
-			//echo '<pre>'.print_r($cur_postObj).'</pre>';
+				$result = json_decode($result['body']);
+	
+				//echo '<pre>'.print_r(json_decode($result['body'])).'</pre>';
+
+
 			$selected_api_product_plan_obj = '';
 			if(isset($result[0])){?>
 				<select name="selected_api_product_plan">
@@ -194,8 +195,6 @@ class DPWC_Dataplans_Admin {
 				}
 
 			} // if(isset($result[0]))
-
-			curl_close($curl);
 
 			wp_nonce_field('select_apiplan_nonce', 'dpwc-select_apiplan_nonce');
 		} // if(isset($settings_arr['api_access_token']) 
@@ -497,24 +496,21 @@ class DPWC_Dataplans_Admin {
 		// Get balance API ​
         try {
 			$url = "https://".DATAPLANS_API_MODE.".dataplans.io/api/v1/accountBalance";
-			$curl = curl_init($url);
-			
-			$headers = [
-				'accept: application/json',				
-				'Authorization: '.DATAPLANS_TOKEN
-			];
+
+			$args = array(
+				'headers'     => array(
+					'Authorization' => DATAPLANS_TOKEN
+				),
+			); 
+	
+				$http = _wp_http_get_object();
 		
-			
-					curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-					curl_setopt($curl, CURLOPT_URL, $url);
-					//curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
-			
-					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			$result = curl_exec($curl);
-			$result = json_decode($result);
-			//echo '<pre>';print_r($result);echo '</pre>';
+				$result = $http->get( $url, $args );
+
+				$result = json_decode($result['body']);
+
+
+				
 			if(isset($result->availableBalance)){
 	       		$status = 'online';
 				$balance = $result->availableBalance;
