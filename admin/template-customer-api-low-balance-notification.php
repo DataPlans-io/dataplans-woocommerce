@@ -32,18 +32,17 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 		else
 			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
 		
-		 $curl = curl_init($url);
-		 curl_setopt($curl, CURLOPT_URL, $url);
-		 $headers = [
-				'accept: application/json',				
-				'Authorization: '.$settings_arr['api_access_token']
-			];
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		$result = curl_exec($curl);
-		$result = json_decode($result);
+			$args = array(
+				'headers'     => array(
+					'Authorization' => $settings_arr['api_access_token']
+				),
+			); 
+	
+				$http = _wp_http_get_object();
+		
+				$result = $http->get( $url, $args );
+
+				$result = json_decode($result['body']);
 
 		if(isset($result->availableBalance))
 			$dplan_curbalance = $result->availableBalance;

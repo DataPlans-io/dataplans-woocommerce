@@ -114,7 +114,7 @@ class DPWC_Dataplans_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dataplans-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( "dpwc_datatable_id_css", plugin_dir_url( __FILE__ ) . 'css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -136,8 +136,8 @@ class DPWC_Dataplans_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_script( "dpwc_datatable_id_js", plugin_dir_url( __FILE__ ) . 'js/jquery.dataTables.min.js', array( 'jquery' ));
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dataplans-admin.js', array( 'jquery' ), $this->version, false );
-
 	}
 
 
@@ -156,21 +156,22 @@ class DPWC_Dataplans_Admin {
 				$url = "https://app.dataplans.io/api/v1/plans";
 			else
 				$url = "https://sandbox.dataplans.io/api/v1/plans";
-			$curl = curl_init($url);
-			curl_setopt($curl, CURLOPT_URL, $url);
 
-			$headers = [
-				'accept: application/json',				
-				'Authorization: '.$settings_arr['api_access_token']
-			];
+			$args = array(
+				'headers'     => array(
+					'Authorization' => $settings_arr['api_access_token']
+				),
+			); 
+	
+				$http = _wp_http_get_object();
+		
+				$result = $http->get( $url, $args );
 
-			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			$result = curl_exec($curl);
-			$result = json_decode($result);
-			//echo '<pre>'.print_r($cur_postObj).'</pre>';
+				$result = json_decode($result['body']);
+	
+				//echo '<pre>'.print_r(json_decode($result['body'])).'</pre>';
+
+
 			$selected_api_product_plan_obj = '';
 			if(isset($result[0])){?>
 				<select name="selected_api_product_plan">
@@ -182,8 +183,8 @@ class DPWC_Dataplans_Admin {
 				} // foreach ($result as $api_prod_obj)?>
 				</select>
 
-				<?php esc_html_e('<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>','dataplans');
-				
+				<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>
+				<?php
 				foreach ($result as $api_prod_obj){
 					if($selected_api_pplan == $api_prod_obj->slug){
 						$selected_api_product_plan_obj = base64_encode(serialize($api_prod_obj));
@@ -195,10 +196,9 @@ class DPWC_Dataplans_Admin {
 
 			} // if(isset($result[0]))
 
-			curl_close($curl);
-
-
+			wp_nonce_field('select_apiplan_nonce', 'dpwc-select_apiplan_nonce');
 		} // if(isset($settings_arr['api_access_token']) 
+		
 
 	} // function
 
@@ -212,43 +212,43 @@ class DPWC_Dataplans_Admin {
 				<table>
 					<tr>
 						<th><?php esc_html_e("WooCommerce Order ID",'dataplans')?></th>
-						<td><?php echo $cur_postObj->ID?></td>
+						<td><?php esc_html_e($cur_postObj->ID)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Purchase Date",'dataplans')?></th>
-						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->purchasedAt))?></td>
+						<td><?php esc_html_e(date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->purchasedAt)))?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Expiry Date",'dataplans')?></th>
-						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->esim->expiryDate))?></td>
+						<td><?php esc_html_e(date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->esim->expiryDate)))?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Plan Slug",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->planSlug?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->planSlug)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Retail Price",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->retail?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->retail)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Paid",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->paid?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->paid)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Currency",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->currency?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->currency)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Phone",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->phone)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Serial",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->serial?><</td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->serial)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("LPA Value",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->qrCodeString) ?></td>
 					</tr>
 				</table>
 
@@ -267,15 +267,15 @@ class DPWC_Dataplans_Admin {
 
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
-			<h3>eSim Code</h3>
+			<h3><?php esc_html_e("eSim Code",'dataplans')?></h3>
 			<table height="100%" width="100%">
 				<tr>
 					<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
 					<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?>&choe=UTF-8"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><?php esc_html_e($product_plan_purchase_arr->purchase->planName)?></td>
+					<?php printf('<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=%s&choe=UTF-8"><br /><span class="dashicons dashicons-phone"></span> %s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeString,$product_plan_purchase_arr->purchase->esim->phone);?>
 				</tr>
 			</table>
 			<?php
@@ -358,11 +358,11 @@ class DPWC_Dataplans_Admin {
 
 	function save_select_api_product_planCBF($cur_post_id){
 		global $wpdb;
-		if(isset($_POST['selected_api_product_plan']))
+		if(isset($_POST['selected_api_product_plan']) && wp_verify_nonce( $_POST['dpwc-select_apiplan_nonce'], 'select_apiplan_nonce' ))
 			update_metadata('post',$cur_post_id,'selected_api_product_plan',sanitize_text_field($_POST['selected_api_product_plan']));
 
 
-		if(isset($_POST['insertapi_infointo_desc'])){
+		if(isset($_POST['insertapi_infointo_desc']) && wp_verify_nonce( $_POST['dpwc-select_apiplan_nonce'], 'select_apiplan_nonce' )){
 
 			$countries_coma_sep = '';
 			$selected_api_info = unserialize(base64_decode(sanitize_text_field($_POST['selected_api_info'])));
@@ -496,24 +496,21 @@ class DPWC_Dataplans_Admin {
 		// Get balance API ​
         try {
 			$url = "https://".DATAPLANS_API_MODE.".dataplans.io/api/v1/accountBalance";
-			$curl = curl_init($url);
-			
-			$headers = [
-				'accept: application/json',				
-				'Authorization: '.DATAPLANS_TOKEN
-			];
+
+			$args = array(
+				'headers'     => array(
+					'Authorization' => DATAPLANS_TOKEN
+				),
+			); 
+	
+				$http = _wp_http_get_object();
 		
-			
-					curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-					curl_setopt($curl, CURLOPT_URL, $url);
-					//curl_setopt($curl, CURLOPT_POSTFIELDS, $postRequest);
-			
-					curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-			$result = curl_exec($curl);
-			$result = json_decode($result);
-			//echo '<pre>';print_r($result);echo '</pre>';
+				$result = $http->get( $url, $args );
+
+				$result = json_decode($result['body']);
+
+
+				
 			if(isset($result->availableBalance)){
 	       		$status = 'online';
 				$balance = $result->availableBalance;
