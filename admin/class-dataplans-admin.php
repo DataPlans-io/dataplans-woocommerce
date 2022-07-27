@@ -182,8 +182,8 @@ class DPWC_Dataplans_Admin {
 				} // foreach ($result as $api_prod_obj)?>
 				</select>
 
-				<?php esc_html_e('<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>','dataplans');
-				
+				<p><input type="submit" name="insertapi_infointo_desc" class="preview button" value="Insert Selected API Product info into description?" /></p><p>&nbsp;</p>
+				<?php
 				foreach ($result as $api_prod_obj){
 					if($selected_api_pplan == $api_prod_obj->slug){
 						$selected_api_product_plan_obj = base64_encode(serialize($api_prod_obj));
