@@ -63,6 +63,7 @@ Please check our [Help Pages](https://esims.gitbook.io/dataplans/ "Help"). See t
 = 1.0.3 =
 * version/ wp version conflict fixed
 * files js/css called locally
+* nonce added
 
 
 
