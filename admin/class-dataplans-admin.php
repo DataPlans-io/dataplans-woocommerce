@@ -114,7 +114,7 @@ class DPWC_Dataplans_Admin {
 		 */
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/dataplans-admin.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style( "dpwc_datatable_id_css", plugin_dir_url( __FILE__ ) . 'css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -136,8 +136,8 @@ class DPWC_Dataplans_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_script( "dpwc_datatable_id_js", plugin_dir_url( __FILE__ ) . 'js/jquery.dataTables.min.js', array( 'jquery' ));
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/dataplans-admin.js', array( 'jquery' ), $this->version, false );
-
 	}
 
 
@@ -197,8 +197,9 @@ class DPWC_Dataplans_Admin {
 
 			curl_close($curl);
 
-
+			wp_nonce_field('select_apiplan_nonce', 'dpwc-select_apiplan_nonce');
 		} // if(isset($settings_arr['api_access_token']) 
+		
 
 	} // function
 
@@ -212,43 +213,43 @@ class DPWC_Dataplans_Admin {
 				<table>
 					<tr>
 						<th><?php esc_html_e("WooCommerce Order ID",'dataplans')?></th>
-						<td><?php echo $cur_postObj->ID?></td>
+						<td><?php esc_html_e($cur_postObj->ID)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Purchase Date",'dataplans')?></th>
-						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->purchasedAt))?></td>
+						<td><?php esc_html_e(date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->purchasedAt)))?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Expiry Date",'dataplans')?></th>
-						<td><?php echo date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->esim->expiryDate))?></td>
+						<td><?php esc_html_e(date("Y-m-d H:i a",strtotime($product_plan_purchase_arr->purchase->esim->expiryDate)))?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Plan Slug",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->planSlug?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->planSlug)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Retail Price",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->retail?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->retail)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Paid",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->paid?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->paid)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Currency",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->currency?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->currency)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Phone",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->phone)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("Serial",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->serial?><</td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->serial)?></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e("LPA Value",'dataplans')?></th>
-						<td><?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?></td>
+						<td><?php esc_html_e($product_plan_purchase_arr->purchase->esim->qrCodeString) ?></td>
 					</tr>
 				</table>
 
@@ -267,15 +268,15 @@ class DPWC_Dataplans_Admin {
 
 		$product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
 		if(isset($product_plan_purchase_arr->purchase->planName)) {?>
-			<h3>eSim Code</h3>
+			<h3><?php esc_html_e("eSim Code",'dataplans')?></h3>
 			<table height="100%" width="100%">
 				<tr>
 					<td><strong><?php esc_html_e("Product",'dataplans')?></strong></td>
 					<td><strong><?php esc_html_e("ESIM CODE",'dataplans')?></strong></td>
 				</tr>
 				<tr>
-					<td><?php echo $product_plan_purchase_arr->purchase->planName?></td>
-					<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=<?php echo $product_plan_purchase_arr->purchase->esim->qrCodeString ?>&choe=UTF-8"><br /><span class="dashicons dashicons-phone"></span> <?php echo $product_plan_purchase_arr->purchase->esim->phone?></td>
+					<td><?php esc_html_e($product_plan_purchase_arr->purchase->planName)?></td>
+					<?php printf('<td><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=%s&choe=UTF-8"><br /><span class="dashicons dashicons-phone"></span> %s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeString,$product_plan_purchase_arr->purchase->esim->phone);?>
 				</tr>
 			</table>
 			<?php
@@ -358,11 +359,11 @@ class DPWC_Dataplans_Admin {
 
 	function save_select_api_product_planCBF($cur_post_id){
 		global $wpdb;
-		if(isset($_POST['selected_api_product_plan']))
+		if(isset($_POST['selected_api_product_plan']) && wp_verify_nonce( $_POST['dpwc-select_apiplan_nonce'], 'select_apiplan_nonce' ))
 			update_metadata('post',$cur_post_id,'selected_api_product_plan',sanitize_text_field($_POST['selected_api_product_plan']));
 
 
-		if(isset($_POST['insertapi_infointo_desc'])){
+		if(isset($_POST['insertapi_infointo_desc']) && wp_verify_nonce( $_POST['dpwc-select_apiplan_nonce'], 'select_apiplan_nonce' )){
 
 			$countries_coma_sep = '';
 			$selected_api_info = unserialize(base64_decode(sanitize_text_field($_POST['selected_api_info'])));
