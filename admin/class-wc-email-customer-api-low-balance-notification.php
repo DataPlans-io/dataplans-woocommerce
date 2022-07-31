@@ -97,7 +97,7 @@ if ( ! class_exists( 'DPWC_WC_Email_Customer_Low_Balance_Notification_Api', fals
 		 */
 		
 		public function get_content_html() {
-			return wc_get_template_html('../../'.PLUGIN_DIR_NAME.'/admin/template-customer-api-low-balance-notification.php',
+			return wc_get_template_html('../../'.DPWC_PDN.'/admin/template-customer-api-low-balance-notification.php',
 				array(
 					'order'              => $this->object,
 					'email_heading'      => "Low Balance Alert!",

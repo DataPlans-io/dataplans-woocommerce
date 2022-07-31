@@ -167,6 +167,11 @@ class DPWC_Dataplans_Admin {
 		
 				$result = $http->get( $url, $args );
 
+				if(isset($result->errors))
+				return;
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
+
 				$result = json_decode($result['body']);
 	
 				//echo '<pre>'.print_r(json_decode($result['body'])).'</pre>';
@@ -506,6 +511,13 @@ class DPWC_Dataplans_Admin {
 				$http = _wp_http_get_object();
 		
 				$result = $http->get( $url, $args );
+
+				if(isset($result->errors))
+				return;
+
+				
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
 
 				$result = json_decode($result['body']);
 
