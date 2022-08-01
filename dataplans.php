@@ -16,7 +16,7 @@
  * Plugin Name:       DataPlans eSIMs for WooCommerce
  * Plugin URI:        https://esims.gitbook.io/dataplans/plugins
  * Description:       Sell eSIMs for digital delivery with WooCommerce and DataPlans.io
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            DataPlans
  * Author URI:        https://dataplans.io/
  * License:           GPL-2.0+
@@ -47,7 +47,7 @@ register_deactivation_hook( __FILE__, 'dpwc_deactivate_dataplans' );
 define( 'DATAPLANS_VERSION', '1.0.3' );
 define('dataplans_PATH', dirname(__FILE__));
 define('dataplans_URL', plugin_dir_url(__FILE__));
-define("PLUGIN_DIR_NAME", plugin_basename(dirname(__FILE__)));
+define("DPWC_PDN", plugin_basename(dirname(__FILE__)));
 
 
 

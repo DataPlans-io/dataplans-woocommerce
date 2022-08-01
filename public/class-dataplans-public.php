@@ -140,6 +140,12 @@ class DPWC_Dataplans_Public {
 		
 				$result = $http->get( $url, $args );
 
+				if(isset($result->errors))
+					return;
+
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
+
 				$result = json_decode($result['body']);
 
 		if(isset($result->availableBalance))
@@ -185,6 +191,12 @@ class DPWC_Dataplans_Public {
 					$http = _wp_http_get_object();
 			
 					$result = $http->post( $url, $args );
+
+				if(isset($result->errors))
+					return;
+
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
 	
 					$result = json_decode($result['body']);
 	

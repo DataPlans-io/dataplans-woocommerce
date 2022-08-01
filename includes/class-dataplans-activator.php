@@ -59,6 +59,14 @@ class DPWC_Dataplans_Activator {
 		
 				$result = $http->get( $url, $args );
 
+				if(isset($result->errors))
+				return;
+				
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
+
+				//die(print_r($result));
+
 				$result = json_decode($result['body']);
 
 		if(isset($result->availableBalance)){
