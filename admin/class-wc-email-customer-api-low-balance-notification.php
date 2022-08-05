@@ -22,18 +22,12 @@ if ( ! class_exists( 'DPWC_WC_Email_Customer_Low_Balance_Notification_Api', fals
 		 */
 		public function __construct() {
 			$this->id             = 'low_balance_notification_api';
-			//$this->customer_email = true;
 			$this->title          = __( 'Low Balance Alert', 'dataplans' );
 			$this->description    = __( 'When the balance is less than the settings given of its, then this notification will be sent.', 'dataplans' );
-			//$this->template_html  = 'emails/customer-completed-order.php';
-			//$this->template_plain = 'emails/plain/customer-completed-order.php';
 			$this->placeholders   = array(
 				'{order_date}'   => '',
 				'{order_number}' => '',
 			);
-
-			// Triggers for this email.
-			//add_action( 'woocommerce_order_status_completed_notification', array( $this, 'trigger' ), 10, 2 );
 
 			// Call parent constructor.
 			parent::__construct();

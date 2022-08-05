@@ -162,7 +162,6 @@ class DPWC_Dataplans {
 		$this->loader->add_filter('woocommerce_email_classes', $plugin_admin, 'sendemail_customer_completed_order_apiCBF' );
 		$this->loader->add_action('init',$plugin_admin,'run_DPWC_WC_Email_Customer_Completed_Order_Api_CBF');
 		$this->loader->add_action( 'woocommerce_before_order_itemmeta', $plugin_admin,'woocommerce_before_order_itemmeta');
-		$this->loader->add_action( 'admin_notices', $plugin_admin,'removecustom_wc_email_settings_resend_lowbal_CBF');
 
 
 
@@ -172,10 +171,6 @@ class DPWC_Dataplans {
 
         $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu', 11 );
         $this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
-//        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_sections' );
-//        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_fields' );
-//        $this->loader->add_action( 'admin_notices', $plugin_admin, 'display_admin_notices' );
-//        $this->loader->add_action( 'admin_init', $plugin_admin, 'admin_notices_init' );
 	}
 
 	/**

@@ -49,12 +49,6 @@ class DPWC_Dataplans_Admin {
 				'description' => 'Low balance notification. Email will send to admin when balance is below this amount',
 				'renderer'    => 'render_balancelimit_alert_CBF',
 			),
-		// 'auto_complete_orders' =>
-		// 	array(
-		// 		'label'       => 'Auto-complete orders',
-		// 		'description' => 'Get orders automatically completed upon payment. This option only works with IPN payments (eg. PayPal).',
-		// 		'renderer'    => 'render_orders_checkbox',
-		// 	)
 	);
 
 	/**
@@ -149,7 +143,6 @@ class DPWC_Dataplans_Admin {
 
 	function select_api_product_plan_metaboxCBF($cur_postObj){
 		$settings_arr = get_option("dpio_options");
-		//echo '<pre>'; print_r($settings_arr); echo '</pre>';
 		$selected_api_pplan = get_metadata('post',$cur_postObj->ID,'selected_api_product_plan',true);
 		if(isset($settings_arr['api_access_token']) && trim($settings_arr['api_access_token']) != ''){
 			if($settings_arr['environment'] == 1)
@@ -173,9 +166,6 @@ class DPWC_Dataplans_Admin {
 					return;
 
 				$result = json_decode($result['body']);
-	
-				//echo '<pre>'.print_r(json_decode($result['body'])).'</pre>';
-
 
 			$selected_api_product_plan_obj = '';
 			if(isset($result[0])){?>
@@ -327,38 +317,11 @@ class DPWC_Dataplans_Admin {
 			$oid = sanitize_text_field($_GET['oid']);
 			WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api']->trigger($oid, wc_get_order($oid) );
 			
-			
-			//wp_mail("customer1@wp1.com","MAM Subj","MAM MAS Messageeeeeeeeeeee");
-
 			wp_safe_redirect(admin_url("admin.php?page=dpio-history"));
 			exit;
 		}
 	}
-	
-
-
-
-
-	function removecustom_wc_email_settings_resend_lowbal_CBF(){
-		?>
-		<script>
-			jQuery(document).ready(function(){
-				jQuery('.wc-email-settings-table-name').find('a').each(function(index, value) {
-					var resendemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Completed_Order_Api'));
-					var lowbalemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Low_Balance_Notification_Api'));
-
-					if(resendemail_indexoff > 0)
-						jQuery(value).parent().parent().remove();
-
-					if(lowbalemail_indexoff > 0)
-						jQuery(value).parent().parent().remove();
-						
-				});
-			});
-  		</script>
-	<?php
-	}
-	
+		
 
 
 	function save_select_api_product_planCBF($cur_post_id){
@@ -382,9 +345,6 @@ class DPWC_Dataplans_Admin {
 			$updated_postcontent = $cur_postcontent.'<br /><br />'.'<strong>API Product Name</strong>: '.($selected_api_info->name).'<br /><strong>Capacity/ Unit</strong>: '.($selected_api_info->capacity).'/ '.($selected_api_info->capacityUnit).'<br /><strong>Region</strong>: '.($selected_api_info->region->name).'<br /><strong>Countries</strong>: '.$countries_coma_sep;
 
 			$wpdb->update($wpdb->posts, array("post_content"=>$updated_postcontent), array('ID'=>$cur_post_id));
-
-			//wp_update_post(array("ID"=>$cur_post_id,"post_content"=>$updated_postcontent));
-
 		}
 
 	}
@@ -425,15 +385,6 @@ class DPWC_Dataplans_Admin {
 			'dpio-history',
 			array( $this, 'display_history_page' )
 		);
-
-		// add_submenu_page(
-		// 	'dataplans',
-		// 	__( 'DataPlans.io Emails Template', DataplansConst::I18N_NAME ),
-		// 	__( 'Emails Template', DataplansConst::I18N_NAME ),
-		// 	'activate_plugins',
-		// 	'dpio-email',
-		// 	array( $this, 'display_email_page' )
-		// );
 	}
 
 	/**
@@ -570,14 +521,20 @@ class DPWC_Dataplans_Admin {
 	public function render_environment( $args = array() ) {
 		?>
         <label class="mr-2" title="Sandbox">
-            <input type="radio" name="dpio_options[<?php echo $args['name'] ?>]"
-                   value="0" <?php if ( $args['options'][ $args['name'] ] == 0 ) { ?> checked <?php } ?>>
-            <span class="input-desc">Sandbox</span>
+	<?php
+	$checked = isset($args['options'][ $args['name'] ]) && $args['options'][ $args['name'] ] == 0 ? 'checked' : '';
+		printf('
+            <input type="radio" name="dpio_options[%s]"
+                   value="0" %s>
+            <span class="input-desc">'.__("Sandbox",'dataplans').'</span>',$args['name'],$checked)?>
         </label>
         <label title="Live">
-            <input type="radio" name="dpio_options[<?php echo $args['name'] ?>]" value="1"
-				<?php if ( $args['options'][ $args['name'] ] == 1 ) { ?> checked <?php } ?>>
-            <span class="input-desc">Live</span>
+		<?php
+	$checked = isset($args['options'][ $args['name'] ]) && $args['options'][ $args['name'] ] == 1 ? 'checked' : '';
+		printf('
+            <input type="radio" name="dpio_options[%s]"
+                   value="0" %s>
+            <span class="input-desc">'.__("Live",'dataplans').'</span>',$args['name'],$checked)?>
         </label>
 		<?php
 	}
@@ -598,7 +555,6 @@ class DPWC_Dataplans_Admin {
 
 	function render_displaying_inemail_qrcode_checkbox( $args = array() ) {
 		$settings_arr = get_option("dpio_options");
-		//echo '<pre>';print_r($settings_arr);echo '</pre>';
 		printf(
 			'<input type="checkbox" id="%s" name="dpio_options[%s]" value="1" %s /><p class="description cst-desc">%s</p>',
 			$args['name'],
@@ -611,7 +567,6 @@ class DPWC_Dataplans_Admin {
 
 	function render_balancelimit_alert_CBF( $args = array() ) {
 		$settings_arr = get_option("dpio_options");
-		//echo '<pre>';print_r($settings_arr);echo '</pre>';
 		printf(
 			'<input type="text" id="%s" name="dpio_options[%s]" value="%s" pattern="[^\s]+" /><p class="description cst-desc">%s</p>',
 			$args['name'],
