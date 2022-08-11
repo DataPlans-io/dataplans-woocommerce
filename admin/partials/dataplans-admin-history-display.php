@@ -12,21 +12,15 @@
 
     global $wpdb;
     $all_orders = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_type='shop_order' AND post_status != 'wc-cancelled' AND post_status != 'wc-failed' AND post_status != 'wc-refunded'");
-    //$email = WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api'];
-		//$email->trigger( 36, wc_get_order(36) );
-   // WC()->mailer()->emails['DPWC_WC_Email_Customer_Completed_Order_Api']->trigger( "36", wc_get_order(36) );
 ?>
 
 <div class="wrap dataplans">
 	<?php settings_errors(); ?>
     <div class="dpio-content">
         <h1><?php _e('DataPlans.io History', DataplansConst::I18N_NAME) ?></h1>
-
-
         <table id="api_dataplans_orders_list" style="width:100%">
             <thead>
                 <tr>
-
                     <th><?php esc_html_e("Date",'dataplans')?></th>
                     <th><?php esc_html_e("WC OID",'dataplans')?></th>
                     <th><?php esc_html_e("Status",'dataplans')?></th>
@@ -41,15 +35,11 @@
             <tbody>
         <?php
             if(isset($all_orders[0])){
-                //var_dump(count($all_orders));
                 foreach ($all_orders as $order_id) {
                     $product_plan_purchase_arr = get_metadata('post',$order_id,'selected_api_product_plan_purchase_array',true);
-                   // echo $order_id.' before condition<pre>';print_r($product_plan_purchase_arr);echo'</pre>';
                     if(isset($product_plan_purchase_arr->purchase)){
-                      //  echo $order_id.' IN condition<pre>';print_r($product_plan_purchase_arr);echo'</pre>';
                         $order = wc_get_order( $order_id );
                         $get_status = $order->get_status();
-                       // $order_get_items = $order->get_items();
                 ?>
                         <tr>
                             <?php printf('<td style="text-align:center">%s</td>',date('Y-m-d h:i a',strtotime($product_plan_purchase_arr->purchase->purchasedAt)))?>

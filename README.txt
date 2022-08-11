@@ -4,7 +4,7 @@ Plugin URL: https://github.com/DataPlans-io/dataplans-woocommerce
 Tags: woocommerce, esim, SIM, travel, data, woo, virtual, digital, qrcode, qr,
 Requires at least: 4.7
 Tested up to: 6.0.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -60,6 +60,10 @@ Please check our [Help Pages](https://esims.gitbook.io/dataplans/ "Help"). See t
 
 == Changelog ==
 
+= 1.0.5 =
+* missing esc_*() functions applied
+* commented code removed
+
 = 1.0.4 =
 * missing esc_*() functions applied
 * constant redefine
@@ -71,18 +75,12 @@ Please check our [Help Pages](https://esims.gitbook.io/dataplans/ "Help"). See t
 * nonce added
 * curl removed
 
-
-
-
 = 1.0.2 =
 * Sanitizing/ esc_*() functions applied
 * local files properly enqueued
 
-
-
 = 1.0.1 =
 * Custom fields added
-
 
 = 1.0 =
 * Release

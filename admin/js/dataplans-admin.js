@@ -31,6 +31,18 @@
 
 	///////// START admin-history-display.php //////
 	 jQuery(document).ready(function() {
+		jQuery('.wc-email-settings-table-name').find('a').each(function(index, value) {
+			var resendemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Completed_Order_Api'));
+			var lowbalemail_indexoff = (jQuery(value).attr('href').indexOf('DPWC_WC_Email_Customer_Low_Balance_Notification_Api'));
+
+			if(resendemail_indexoff > 0)
+				jQuery(value).parent().parent().remove();
+
+			if(lowbalemail_indexoff > 0)
+				jQuery(value).parent().parent().remove();
+				
+		});
+		
 		jQuery('#api_dataplans_orders_list').DataTable({
 	order: [[1, 'desc']]
 });
