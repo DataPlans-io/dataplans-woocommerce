@@ -135,16 +135,33 @@ class DPWC_Dataplans_Admin {
 	}
 
 
-	function init_addmetabox_select_api_product_planCBF(){		
+	function init_addmetabox_select_api_product_planCBF($post_type,$this_postObj){		
+
 		add_meta_box('id_select_api_product_plan_metabox','Select API Product',array( $this, 'select_api_product_plan_metaboxCBF'),'product','normal','high');	
-		add_meta_box('id_api_purchased_product_details_metabox','API Purchased Product Details',array( $this, 'api_purchased_order_product_details_metaboxCBF'),'shop_order','normal','default');	
-	}
+
+		if($post_type == "shop_order"){
+			$settings_arr = get_option("dpio_options");
+
+			$order = wc_get_order( $this_postObj->ID );
+			$items = $order->get_items();
+
+			foreach ( $items as $product )
+			$pid = $product['product_id'];
+
+			$settings_arr = get_option("dpio_options");
+			$selected_api_pplan = get_metadata('post',$pid,'selected_api_product_plan',true);
+
+			if(isset($settings_arr['api_access_token']) && $selected_api_pplan && $selected_api_pplan != 'no_selected_api_product_plan' && trim($settings_arr['api_access_token']) != '')
+			add_meta_box('id_api_purchased_product_details_metabox','API Purchased Product Details',array( $this, 'api_purchased_order_product_details_metaboxCBF'),'shop_order','normal','default');
+		} // if($post_type == "shop_order")
+	} // function
 
 
 	function select_api_product_plan_metaboxCBF($cur_postObj){
 		$settings_arr = get_option("dpio_options");
 		$selected_api_pplan = get_metadata('post',$cur_postObj->ID,'selected_api_product_plan',true);
 		if(isset($settings_arr['api_access_token']) && trim($settings_arr['api_access_token']) != ''){
+			
 			if($settings_arr['environment'] == 1)
 				$url = "https://app.dataplans.io/api/v1/plans";
 			else
@@ -202,7 +219,6 @@ class DPWC_Dataplans_Admin {
 		$product_plan_purchase_arr = get_metadata('post',$cur_postObj->ID,'selected_api_product_plan_purchase_array',true);
 		$settings_arr = get_option("dpio_options");
 		if(isset($settings_arr['api_access_token']) && trim($settings_arr['api_access_token']) != ''){
-			
 			if(isset($product_plan_purchase_arr->purchase)){?>
 				<table>
 					<tr>
@@ -248,12 +264,13 @@ class DPWC_Dataplans_Admin {
 				</table>
 
 		<?php
-			} // if(isset($result['purchaseId'])){
-
+			} // if(isset($product_plan_purchase_arr->purchase))
+			else{?>
+					<input type="submit" name="Manually_Fulfill" value="Manually Fulfill" class="button updatemeta button-small" />
+<?php
+			}
 		}
-
-		
-	}
+	} // function
 
 
 	function woocommerce_before_order_itemmeta( ){
