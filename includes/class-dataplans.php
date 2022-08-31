@@ -154,7 +154,7 @@ class DPWC_Dataplans {
 
 		$plugin_admin = new DPWC_Dataplans_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'init_addmetabox_select_api_product_planCBF' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'init_addmetabox_select_api_product_planCBF',1,2 );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_select_api_product_planCBF' );		
 		$this->loader->add_action( 'woocommerce_email_after_order_table', $plugin_admin, 'wc_email_after_order_table' );
 		
@@ -184,6 +184,8 @@ class DPWC_Dataplans {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'woocommerce_order_status_completed', $plugin_public, 'wc_order_status_completed' );
+		$this->loader->add_action( 'save_post', $plugin_public, 'rerun_work_wc_order_status_completed',1,2 );
+
 		$this->loader->add_action( 'woocommerce_view_order', $plugin_public, 'woocommerce_view_order'  );
 
 	}

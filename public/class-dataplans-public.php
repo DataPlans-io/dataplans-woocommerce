@@ -122,6 +122,9 @@ class DPWC_Dataplans_Public {
 	<?php
 		} // if isset
 	}
+
+
+
 	function wc_order_status_completed($order_id){
 		$settings_arr = get_option("dpio_options");
 
@@ -209,9 +212,104 @@ class DPWC_Dataplans_Public {
 				update_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',"flag_selected_api_product_plan_purchase_array_inserted");
 				update_option("current_balance_api_product_purchases",$result->availableBalance);
 			}
-			curl_close($curl);
-
 			
 		} // if(isset($settings_arr['api_access_token'])
 	}// function
+
+
+
+	
+	function rerun_work_wc_order_status_completed($order_id,$postObj){
+		if($postObj->post_type == "shop_order" && isset($_POST['Manually_Fulfill'])){
+
+		$settings_arr = get_option("dpio_options");
+
+		if($settings_arr['environment'] == 1)
+			$url = "https://app.dataplans.io/api/v1/accountBalance";
+		else
+			$url = "https://sandbox.dataplans.io/api/v1/accountBalance";
+		
+			$args = array(
+				'headers'     => array(
+					'Authorization' => $settings_arr['api_access_token']
+				),
+			); 
+	
+				$http = _wp_http_get_object();
+		
+				$result = $http->get( $url, $args );
+
+				if(isset($result->errors))
+					return;
+
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
+
+				$result = json_decode($result['body']);
+
+		if(isset($result->availableBalance))
+			$dplan_curbalance = $result->availableBalance;
+		else
+			$dplan_curbalance = 0;
+
+		$flag_selected_api_product_plan = get_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',true);
+		if(isset($settings_arr['balancelimit_alert']) && trim($settings_arr['balancelimit_alert']) != '' && $dplan_curbalance <= $settings_arr['balancelimit_alert'])
+			WC()->mailer()->emails['DPWC_WC_Email_Customer_Low_Balance_Notification_Api']->trigger( $order_id, wc_get_order($order_id) );
+		
+
+		if(strlen($flag_selected_api_product_plan) > 5)
+			return;
+	
+        $order = wc_get_order( $order_id );
+        $items = $order->get_items();
+
+        foreach ( $items as $product )
+           $pid = $product['product_id'];
+
+		$selected_api_pplan = get_metadata('post',$pid,'selected_api_product_plan',true);
+		if(isset($settings_arr['api_access_token']) && trim($selected_api_pplan) != '' && $selected_api_pplan != 'no_selected_api_product_plan' && trim($settings_arr['api_access_token']) != ''){
+					
+			
+			if($settings_arr['environment'] == 1)
+				$url = "https://app.dataplans.io/api/v1/purchases";
+			else
+				$url = "https://sandbox.dataplans.io/api/v1/purchases";
+			
+				$postRequest = array(
+					'slug' => $selected_api_pplan,
+					'includeQRDataURL' => "true"
+				);
+				$args = array(
+					'body'    => $postRequest,
+					'headers'     => array(
+						'Authorization' => $settings_arr['api_access_token']
+					),
+				); 
+		
+					$http = _wp_http_get_object();
+			
+					$result = $http->post( $url, $args );
+
+				if(isset($result->errors))
+					return;
+
+				if(isset($result['response']['code']) && $result['response']['code'] != '200')
+					return;
+	
+					$result = json_decode($result['body']);
+	
+
+
+			if(isset($result->purchase)){
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_id',$result->purchase->purchaseId);
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_qrcode',$result->purchase->esim->qrCodeString);
+				update_metadata('post',$order_id,'selected_api_product_plan_purchase_array',$result);
+				update_metadata('post',$order_id,'flag_selected_api_product_plan_purchase_array_inserted',"flag_selected_api_product_plan_purchase_array_inserted");
+				update_option("current_balance_api_product_purchases",$result->availableBalance);
+			}
+			
+		} // if(isset($settings_arr['api_access_token'])
+		} // if($postObj->post_type == "shop_order" && isset($_POST['Manually_Fulfill'])){
+	}// function
+
 }
