@@ -10,13 +10,18 @@
  * @subpackage Dataplans/admin/partials
  */
 
+    $settings_arr = get_option("dpio_options");
+
+    $fromdate = isset($settings_arr['dp_history_daterange_from']) && trim($settings_arr['dp_history_daterange_from']) != '' ? date('Y-m-d H:i:s',strtotime($settings_arr['dp_history_daterange_from'])) : date('Y-m-d H:i:s', strtotime('-7 days'));
+    $tilldate = isset($settings_arr['dp_history_daterange_till']) && trim($settings_arr['dp_history_daterange_till']) != '' ? date('Y-m-d H:i:s',strtotime($settings_arr['dp_history_daterange_till'])) : date('Y-m-d H:i:s');
+    
     global $wpdb;
     $records_perpage = 1000;
     $viewedPageNum = isset($_GET['bulk']) && $_GET['bulk'] >= 1 ? $_GET['bulk'] : 1 ;
     $recordsFrom = ($records_perpage * $viewedPageNum) - $records_perpage;
 
-   $all_orders = $wpdb->get_col("SELECT p.ID FROM $wpdb->posts p,$wpdb->postmeta pm WHERE p.post_type='shop_order' AND p.post_status != 'wc-cancelled' AND p.post_status != 'wc-failed' AND p.post_status != 'wc-refunded' AND p.ID=pm.post_id AND pm.meta_key='selected_api_product_plan_purchase_array' ORDER BY p.ID DESC LIMIT $recordsFrom, $records_perpage");
-    //echo '<pre>';print_r($all_orders);echo '</pre>';
+    $all_orders = $wpdb->get_col("SELECT p.ID FROM $wpdb->posts p,$wpdb->postmeta pm WHERE p.post_type='shop_order' AND p.post_status != 'wc-cancelled' AND p.post_status != 'wc-failed' AND p.post_status != 'wc-refunded' AND p.post_date >= '$fromdate' AND p.post_date <= '$tilldate' AND p.ID=pm.post_id AND pm.meta_key='selected_api_product_plan_purchase_array' ORDER BY p.ID DESC LIMIT $recordsFrom, $records_perpage");
+  
 ?>
 
 <div class="wrap dataplans">
