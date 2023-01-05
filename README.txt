@@ -3,6 +3,7 @@ Contributors: dataplans, alisaleem252, thebusted
 Plugin URL: https://github.com/DataPlans-io/dataplans-woocommerce
 Tags: woocommerce, esim, SIM, travel, data, woo, virtual, digital, qrcode, qr,
 Requires at least: 4.7
+
 Tested up to: 6.1.1
 Stable tag: 1.1.5
 Requires PHP: 7.0
@@ -59,6 +60,8 @@ Please check our [Help Pages](https://esims.gitbook.io/dataplans/ "Help"). See t
 2. This is the second screen shot
 
 == Changelog ==
+= 1.1.0 =
+* Added Manual Order Processing for incomplete dataplan Orders.
 
 = 1.1.5 =
 * DataPlans Order History: get records according to given date range(set in DataPlans settings page)
