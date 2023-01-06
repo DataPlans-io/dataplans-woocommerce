@@ -49,6 +49,18 @@ class DPWC_Dataplans_Admin {
 				'description' => 'Low balance notification. Email will send to admin when balance is below this amount',
 				'renderer'    => 'render_balancelimit_alert_CBF',
 			),
+		'dp_history_daterange_from' =>
+			array(
+				'label'       => 'From Date',
+				'description' => 'DataPlans Order History Date Range (Start/ From Date)',
+				'renderer'    => 'dp_history_daterange_from_CBF',
+			),
+		'dp_history_daterange_till' =>
+			array(
+				'label'       => 'To/ Till Date',
+				'description' => 'DataPlans Order History Date Range (To/ Till Date)',
+				'renderer'    => 'dp_history_daterange_till_CBF',
+			)
 	);
 
 	/**
@@ -592,6 +604,32 @@ class DPWC_Dataplans_Admin {
 			$this->admin_options[ $args['name'] ]['description']
 		);
 	}
+
+
+	function dp_history_daterange_from_CBF( $args = array() ) {
+		$settings_arr = get_option("dpio_options");
+		printf(
+			'<input type="date" id="%s" name="dpio_options[%s]" value="%s" /><p class="description cst-desc">%s</p>',
+			$args['name'],
+			$args['name'],
+			$args['options'][ $args['name'] ],
+			$this->admin_options[ $args['name'] ]['description']
+		);
+	}
+
+
+
+	function dp_history_daterange_till_CBF( $args = array() ) {
+		$settings_arr = get_option("dpio_options");
+		printf(
+			'<input type="date" id="%s" name="dpio_options[%s]" value="%s" /><p class="description cst-desc">%s</p>',
+			$args['name'],
+			$args['name'],
+			$args['options'][ $args['name'] ],
+			$this->admin_options[ $args['name'] ]['description']
+		);
+	}
+
 
 	/**
 	 * @param array $args
