@@ -200,7 +200,7 @@ class DPWC_Dataplans {
 		
 		$settings_arr = get_option("dpio_options");
 		if(!empty($settings_arr['api_access_token']) && !get_option('current_balance_api_product_purchases')) 
-		Dataplans::update_balance();
+		DPWC_Dataplans::update_balance();
 	}
 
 	public static function update_balance(){	
