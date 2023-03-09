@@ -330,7 +330,8 @@ class DPWC_Dataplans_Admin {
 				</tr>
 				<tr>
 				<?php printf('<td>%s</td>',$product_plan_purchase_arr->purchase->planName)?>
-				<?php printf('<td><img src="%s"><br />%s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$showstatus)?>
+				<?php printf('<td><a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=%s&choe=UTF-8" title="qr code"><img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=%s&choe=UTF-8" alt="QR Code" title="QR Code" style="display:block" width="300" height="300"><br /><span class="dashicons dashicons-phone"></span>%s</a></td>',$product_plan_purchase_arr->purchase->esim->qrCodeString,$product_plan_purchase_arr->purchase->esim->qrCodeString,$showstatus);//printf('<td><img src="%s"><br />%s</td>',$product_plan_purchase_arr->purchase->esim->qrCodeDataUrl,$showstatus)
+					?>
 				</tr>
 			</table>
 			<?php
