@@ -563,7 +563,7 @@ class DPWC_Dataplans_Admin {
 	$checked = isset($args['options'][ $args['name'] ]) && $args['options'][ $args['name'] ] == 1 ? 'checked' : '';
 		printf('
             <input type="radio" name="dpio_options[%s]"
-                   value="0" %s>
+                   value="1" %s>
             <span class="input-desc">'.__("Live",'dataplans').'</span>',$args['name'],$checked)?>
         </label>
 		<?php
